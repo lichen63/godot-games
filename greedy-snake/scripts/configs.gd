@@ -2,7 +2,7 @@ extends Node
 
 # Group names
 const GROUP_NAME_WALLS:String = "walls"
-const GROUP_NAME_SNAKE_BODY:String = "snake_body"
+const GROUP_NAME_SNAKE:String = "snake"
 const GROUP_NAME_FOODS:String = "foods"
 
 # Action event names
