@@ -1,20 +1,24 @@
 extends Area2D
 
 
+const SPEED:int = 5;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+  pass # Replace with function body.
 
+func _physics_process(_delta: float) -> void:
+  var left_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_LEFT)
+  var right_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_RIGHT)
+  var up_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_UP)
+  var down_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_DOWN)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	
-func _physics_process(delta: float) -> void:
-	var left_value = Input.get_action_strength("snake_left")
-	var right_value = Input.get_action_strength("snake_right")
-	var up_value = Input.get_action_strength("snake_up")
-	var down_value = Input.get_action_strength("snake_down")
+  position.x += (right_value - left_value) * SPEED
+  position.y += (down_value - up_value) * SPEED
 
-	position.x += (right_value - left_value) * 2
-	position.y += (down_value - up_value) * 2
+func _on_area_entered(area: Area2D) -> void:
+  if area.is_in_group(Configs.GROUP_NAME_WALLS):
+    reset_pos()
+
+func reset_pos() -> void:
+  position = get_viewport().size / 2
