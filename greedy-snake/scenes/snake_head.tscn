@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5knwq"]
 size = Vector2(30, 30)
 
-[node name="area" type="Area2D"]
+[node name="snake_head" type="Area2D"]
 position = Vector2(103, 103)
 script = ExtResource("1_fddsl")
 

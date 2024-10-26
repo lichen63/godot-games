@@ -17,7 +17,7 @@ func _physics_process(_delta: float) -> void:
   position.y += (down_value - up_value) * SPEED
 
 func _on_area_entered(area: Area2D) -> void:
-  if area.is_in_group(Configs.GROUP_NAME_WALLS):
+  if area.is_in_group(Configs.GROUP_NAME_WALLS) || area.is_in_group(Configs.GROUP_NAME_SNAKE):
     #TODO: End the game with failure
     reset_pos()
 
