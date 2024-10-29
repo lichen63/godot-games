@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkm0o4fs51xco"]
+[gd_scene load_steps=8 format=3 uid="uid://bkm0o4fs51xco"]
 
 [ext_resource type="PackedScene" uid="uid://dp4gc8qwkfx0l" path="res://scenes/snake_head.tscn" id="1_6nvoh"]
 [ext_resource type="Script" path="res://scripts/walls.gd" id="2_raxs3"]
 [ext_resource type="PackedScene" uid="uid://ckwxrxfmni3h4" path="res://scenes/food.tscn" id="3_epwp3"]
 [ext_resource type="Script" path="res://scripts/snake.gd" id="3_h1dc6"]
-[ext_resource type="PackedScene" uid="uid://douhdn23beijy" path="res://scenes/snake_body.tscn" id="4_4o34o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nye5l"]
 size = Vector2(20, 600)
@@ -83,7 +82,3 @@ script = ExtResource("3_h1dc6")
 
 [node name="snake_head" parent="snake" instance=ExtResource("1_6nvoh")]
 position = Vector2(600, 300)
-
-[node name="snake_body" parent="snake" instance=ExtResource("4_4o34o")]
-visible = false
-position = Vector2(570, 300)

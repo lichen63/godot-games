@@ -1,11 +1,11 @@
 extends Node2D
 
 const MOVE_SPEED:int = 5
+const INIT_SNAKE_BODY_LENGTH:int = 3
 const BODY_SCENE_PATH:String = "res://scenes/snake_body.tscn"
 
 var body_cur_length_:int = 0
 var head_node_:Area2D = null
-var move_path:Array[Vector2] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,7 +14,8 @@ func _ready() -> void:
     print("[snake::_ready] head_node_ is invalid")
     return
     
-  add_body_to_tail()
+  for i in INIT_SNAKE_BODY_LENGTH:
+    add_body_to_tail()
 
 func _physics_process(_delta: float) -> void:
   var left_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_LEFT)
@@ -25,18 +26,18 @@ func _physics_process(_delta: float) -> void:
   var offset = Vector2((right_value - left_value) * MOVE_SPEED, (down_value - up_value) * MOVE_SPEED)
   if offset.is_equal_approx(Vector2(0, 0)):
     return
+  offset.normalized()
+
+  var move_path:Array[Vector2] = []
+  for child in get_children():
+    move_path.push_back(child.position)
 
   head_node_.position += offset
 
-  #var body_index = 1;
-  #while (body_index <= body_cur_length_):
-    #var body_node = get_body_node(body_index)
-    #if not is_instance_valid(body_node):
-      #break
-    #var temp_pos = body_node.position
-    #body_node.position = prev_pos
-    #prev_pos = temp_pos
-    #body_index += 1
+  var children_count = get_child_count()
+  var children = get_children()
+  for i in range(1, children_count):
+    children[i].position = move_path[i-1]
 
 # Get the tail node of snake
 func get_tail_node() -> Area2D:
@@ -75,4 +76,3 @@ func add_body_to_tail() -> void:
   snake_body.name = Configs.NODE_NAME_SNAKE_BODY_PREFIX + str(body_cur_length_)
   snake_body.position = snake_tail.position + Vector2(-Configs.SNAKE_NODE_WIDTH, 0)
   self.add_child(snake_body)
-  move_path.push_back(snake_body.position)
