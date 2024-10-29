@@ -85,4 +85,5 @@ script = ExtResource("3_h1dc6")
 position = Vector2(600, 300)
 
 [node name="snake_body" parent="snake" instance=ExtResource("4_4o34o")]
+visible = false
 position = Vector2(570, 300)
