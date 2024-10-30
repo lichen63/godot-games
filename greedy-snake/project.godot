@@ -18,6 +18,7 @@ config/icon="res://assets/icons/icon.svg"
 [autoload]
 
 Configs="*res://scripts/configs.gd"
+Logger="*res://scripts/logger.gd"
 
 [display]
 

@@ -1,17 +1,20 @@
 extends Node2D
 
+enum MoveDirection {UP, DOWN, LEFT, RIGHT}
+
 const MOVE_SPEED:int = 5
 const INIT_SNAKE_BODY_LENGTH:int = 3
 const BODY_SCENE_PATH:String = "res://scenes/snake_body.tscn"
 
 var body_cur_length_:int = 0
 var head_node_:Area2D = null
+var head_move_direction_ = MoveDirection.RIGHT
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
   head_node_ = get_head_node()
   if not is_instance_valid(head_node_):
-    print("[snake::_ready] head_node_ is invalid")
+    Logger.warning("[snake::_ready] head_node_ is invalid")
     return
     
   for i in INIT_SNAKE_BODY_LENGTH:
@@ -22,6 +25,17 @@ func _physics_process(_delta: float) -> void:
   var right_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_RIGHT)
   var up_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_UP)
   var down_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_DOWN)
+  
+  if Input.get_action_strength(Configs.ACTION_SNAKE_LEFT):
+    head_move_direction_ = MoveDirection.LEFT
+  elif Input.get_action_strength(Configs.ACTION_SNAKE_RIGHT):
+    head_move_direction_ = MoveDirection.RIGHT
+  elif Input.get_action_strength(Configs.ACTION_SNAKE_UP):
+    head_move_direction_ = MoveDirection.UP
+  elif Input.get_action_strength(Configs.ACTION_SNAKE_DOWN):
+    head_move_direction_ = MoveDirection.DOWN
+  else:
+    Logger.warning("[snake::_physics_process] unknown input direction")
 
   var offset = Vector2((right_value - left_value) * MOVE_SPEED, (down_value - up_value) * MOVE_SPEED)
   if offset.is_equal_approx(Vector2(0, 0)):
