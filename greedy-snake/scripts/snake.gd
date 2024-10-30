@@ -8,7 +8,7 @@ const BODY_SCENE_PATH:String = "res://scenes/snake_body.tscn"
 
 var body_cur_length_:int = 0
 var head_node_:Area2D = null
-var head_move_direction_ = MoveDirection.RIGHT
+var head_move_direction_:MoveDirection = MoveDirection.RIGHT
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,12 +20,7 @@ func _ready() -> void:
   for i in INIT_SNAKE_BODY_LENGTH:
     add_body_to_tail()
 
-func _physics_process(_delta: float) -> void:
-  var left_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_LEFT)
-  var right_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_RIGHT)
-  var up_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_UP)
-  var down_value:float = Input.get_action_strength(Configs.ACTION_SNAKE_DOWN)
-  
+func _physics_process(_delta:float) -> void:
   if Input.get_action_strength(Configs.ACTION_SNAKE_LEFT):
     head_move_direction_ = MoveDirection.LEFT
   elif Input.get_action_strength(Configs.ACTION_SNAKE_RIGHT):
@@ -35,23 +30,7 @@ func _physics_process(_delta: float) -> void:
   elif Input.get_action_strength(Configs.ACTION_SNAKE_DOWN):
     head_move_direction_ = MoveDirection.DOWN
   else:
-    Logger.warning("[snake::_physics_process] unknown input direction")
-
-  var offset = Vector2((right_value - left_value) * MOVE_SPEED, (down_value - up_value) * MOVE_SPEED)
-  if offset.is_equal_approx(Vector2(0, 0)):
     return
-  offset.normalized()
-
-  var move_path:Array[Vector2] = []
-  for child in get_children():
-    move_path.push_back(child.position)
-
-  head_node_.position += offset
-
-  var children_count = get_child_count()
-  var children = get_children()
-  for i in range(1, children_count):
-    children[i].position = move_path[i-1]
 
 # Get the tail node of snake
 func get_tail_node() -> Area2D:
@@ -69,7 +48,7 @@ func get_head_node() -> Area2D:
   return null
   
 # Get selected body node
-func get_body_node(body_index) -> Area2D:
+func get_body_node(body_index:int) -> Area2D:
   if body_index < 1 or body_index > body_cur_length_:
     return null
   for child in get_children():
