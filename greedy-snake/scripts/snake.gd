@@ -2,7 +2,7 @@ extends Node2D
 
 enum MoveDirection {UP, DOWN, LEFT, RIGHT}
 
-const MOVE_SPEED: int = 5
+const MOVE_SPEED: int = 3
 const INIT_SNAKE_BODY_LENGTH: int = 3
 const BODY_SCENE_PATH: String = "res://scenes/snake_body.tscn"
 const DEFAULT_MOVE_DIR: MoveDirection = MoveDirection.RIGHT
@@ -35,27 +35,31 @@ func _physics_process(_delta:float) -> void:
   elif Input.get_action_strength(Configs.ACTION_SNAKE_DOWN):
     head_move_direction_ = MoveDirection.DOWN
 
-  var move_vec = Vector2(0, 0)
-  if head_move_direction_ == MoveDirection.LEFT:
-    move_vec.x -= MOVE_SPEED
-  elif head_move_direction_ == MoveDirection.RIGHT:
-    move_vec.x += MOVE_SPEED
-  if head_move_direction_ == MoveDirection.UP:
-    move_vec.y -= MOVE_SPEED
-  elif head_move_direction_ == MoveDirection.DOWN:
-    move_vec.y += MOVE_SPEED
-  
+  var move_vec = get_move_vec_from_dir(head_move_direction_)
   head_node_.position += move_vec
+  move_dirs_[head_node_] = head_move_direction_
   
   var children = get_children()
   var children_cnt = get_child_count()
   for index in range(1, children_cnt):
-    var cur_node = children[index]
-    var prev_node = children[index-1]
-    var cur_node_pos = cur_node.position
-    var prev_node_pos = prev_node.position
-    var cur_node_dir = move_dirs_[cur_node]
-    var prev_node_dir = move_dirs_[prev_node]
+    var cur_node: Area2D = children[index]
+    var prev_node: Area2D = children[index-1]
+    var cur_node_pos: Vector2 = cur_node.position
+    var prev_node_pos: Vector2 = prev_node.position
+    var cur_node_dir: MoveDirection = move_dirs_[cur_node]
+    var prev_node_dir: MoveDirection = move_dirs_[prev_node]
+    if cur_node_dir == prev_node_dir:
+      cur_node.position += get_move_vec_from_dir(cur_node_dir)
+    else:
+      if prev_node_dir == MoveDirection.LEFT || prev_node_dir == MoveDirection.RIGHT:
+        if is_equal_approx(cur_node_pos.x, prev_node_pos.x):
+          cur_node_dir = prev_node_dir
+        cur_node.position += get_move_vec_from_dir(cur_node_dir)
+      else:
+        if is_equal_approx(cur_node_pos.y, prev_node_pos.y):
+          cur_node_dir = prev_node_dir
+        cur_node.position += get_move_vec_from_dir(cur_node_dir)
+    move_dirs_[cur_node] = cur_node_dir
 
 # Get the tail node of snake
 func get_tail_node() -> Area2D:
@@ -94,3 +98,15 @@ func add_body_to_tail() -> void:
   snake_body.set_properties(body_cur_length_)
   snake_body.position = snake_tail.position + Vector2(-Configs.SNAKE_NODE_WIDTH, 0)
   self.add_child(snake_body)
+
+func get_move_vec_from_dir(dir: MoveDirection) -> Vector2:
+  var move_vec = Vector2(0, 0)
+  if dir == MoveDirection.LEFT:
+    move_vec.x -= MOVE_SPEED
+  elif dir == MoveDirection.RIGHT:
+    move_vec.x += MOVE_SPEED
+  if dir == MoveDirection.UP:
+    move_vec.y -= MOVE_SPEED
+  elif dir == MoveDirection.DOWN:
+    move_vec.y += MOVE_SPEED
+  return move_vec
