@@ -1,9 +1,9 @@
 extends Node
 
 # Group names
-const GROUP_NAME_WALLS:String = "walls"
-const GROUP_NAME_SNAKE:String = "snake"
-const GROUP_NAME_FOODS:String = "foods"
+const GROUP_NAME_WALLS:String = "group_walls"
+const GROUP_NAME_SNAKE:String = "group_snake"
+const GROUP_NAME_FOODS:String = "group_foods"
 
 # Action event names
 const ACTION_SNAKE_LEFT:String = "snake_left"
