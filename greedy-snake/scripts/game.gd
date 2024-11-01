@@ -17,7 +17,7 @@ var cell_data_: Array = []
 var snake_head_: Node2D = null
 var snake_bodies_: Array[Node2D] = []
 var snake_move_timer_ :Timer = null
-var snake_move_time_interval_ = 1.0
+var snake_move_time_interval_ = 0.5
 var snake_cur_move_dir_: SnakeMoveDirection = SNAKE_DEFAULT_MOVE_DIR
 var snake_next_move_dir_: SnakeMoveDirection = SNAKE_DEFAULT_MOVE_DIR
 var food_: Node2D = null
@@ -25,47 +25,16 @@ var food_: Node2D = null
 # Called when the node enters the scene tree for the first time
 func _ready() -> void:
   # Initialize the cell state
-  for x in range(0, Configs.MAP_CELL_SIZE_X):
-    var column_data: Array = []
-    column_data.push_back(MapCellState.WALL)
-    for y in range(1, Configs.MAP_CELL_SIZE_Y - 1):
-      if x == 0 or x == Configs.MAP_CELL_SIZE_X - 1:
-        column_data.push_back(MapCellState.WALL)
-      else:
-        column_data.push_back(MapCellState.IDLE)
-    column_data.push_back(MapCellState.WALL)
-    cell_data_.push_back(column_data)
+  init_map_cell_state()
   # Initialize the snake
-  snake_head_ = snake_head_scene_.instantiate()
-  snake_head_.position = calc_pos_from_coords(Vector2i(SNAKE_HEAD_INIT_COORD_X, SNAKE_HEAD_INIT_COORD_Y))
-  add_child(snake_head_)
-  for i in SNAKE_BODY_INIT_LENGTH:
-    add_body_to_tail(SNAKE_HEAD_INIT_COORD_X - i - 1, SNAKE_HEAD_INIT_COORD_Y)
+  init_snake_node()
   # Initialize the timer for moving snake
-  snake_move_timer_ = Timer.new()
-  snake_move_timer_.wait_time = snake_move_time_interval_
-  snake_move_timer_.one_shot = false
-  snake_move_timer_.autostart = true
-  add_child(snake_move_timer_)
-  snake_move_timer_.connect("timeout", Callable(self, "_on_snake_move_timer_timeout"))
+  init_snake_move_timer()
   # Initialize the food
-  # Get all the idle map cell
-  var idle_cells: Array[Vector2i] = []
-  for x in range(1, Configs.MAP_CELL_SIZE_X - 1):
-    for y in range(1, Configs.MAP_CELL_SIZE_Y - 1):
-      if cell_data_[x][y] == MapCellState.IDLE:
-        idle_cells.push_back(Vector2i(x, y))
-  if idle_cells.size() == 0:
-    return  # TODO: End game with success
-  var rand_index: int = randi_range(0, idle_cells.size() - 1)
-  var food_coords: Vector2i = idle_cells[rand_index]
-  food_ = food_scene_.instantiate()
-  food_.position = calc_pos_from_coords(food_coords)
-  cell_data_[food_coords.x][food_coords.y] = MapCellState.FOOD
-  add_child(food_)
+  init_food_node()
 
 # Called during the physics processing step of the main loop
-func _physics_process(_delta:float) -> void:
+func _physics_process(_delta: float) -> void:
   if Input.get_action_strength(Configs.ACTION_SNAKE_LEFT):
     snake_next_move_dir_ = SnakeMoveDirection.LEFT
   elif Input.get_action_strength(Configs.ACTION_SNAKE_RIGHT):
@@ -83,50 +52,110 @@ func _on_snake_move_timer_timeout() -> void:
     snake_next_move_dir_ = snake_cur_move_dir_
   else:
     snake_cur_move_dir_ = snake_next_move_dir_
-  var cur_coords: Vector2i = calc_coords_from_pos(snake_head_.position)
-  var next_coords: Vector2i = calc_next_coords(cur_coords)
-  if not check_coords_valid(next_coords):
+  var cur_coord: Vector2i = calc_coord_from_pos(snake_head_.position)
+  var next_coord: Vector2i = calc_next_coord(cur_coord)
+  if not check_coord_valid(next_coord):
     Logger.info("Game Over!")
     return  # TODO: End game with failure
-  if check_coords_has_food(next_coords):
+  if check_coord_has_food(next_coord):
     pass  # TODO: Consume the food, increase the body length and refresh food position
-  # Move the snake head postion
-  snake_head_.position = calc_pos_from_coords(next_coords)
-  cell_data_[next_coords.x][next_coords.y] = MapCellState.SNAKE_HEAD
+  move_snake_head_node(cur_coord, next_coord)
   # Move the tail snake body node to right after head node
+  move_snake_tail_node(cur_coord)
+
+# Initialize the state of map cells
+func init_map_cell_state() -> void:
+  for x in range(0, Configs.MAP_CELL_SIZE_X):
+    var column_data: Array = []
+    column_data.push_back(MapCellState.WALL)
+    for y in range(1, Configs.MAP_CELL_SIZE_Y - 1):
+      if x == 0 or x == Configs.MAP_CELL_SIZE_X - 1:
+        column_data.push_back(MapCellState.WALL)
+      else:
+        column_data.push_back(MapCellState.IDLE)
+    column_data.push_back(MapCellState.WALL)
+    cell_data_.push_back(column_data)
+
+# Initialize the snake head and bodies
+func init_snake_node() -> void:
+  snake_head_ = snake_head_scene_.instantiate()
+  snake_head_.position = calc_pos_from_coord(Vector2i(SNAKE_HEAD_INIT_COORD_X, SNAKE_HEAD_INIT_COORD_Y))
+  add_child(snake_head_)
+  for i in SNAKE_BODY_INIT_LENGTH:
+    add_body_to_tail(SNAKE_HEAD_INIT_COORD_X - i - 1, SNAKE_HEAD_INIT_COORD_Y)
+
+# Initialize the snake move timer
+func init_snake_move_timer() -> void:
+  snake_move_timer_ = Timer.new()
+  snake_move_timer_.wait_time = snake_move_time_interval_
+  snake_move_timer_.one_shot = false
+  snake_move_timer_.autostart = true
+  add_child(snake_move_timer_)
+  snake_move_timer_.connect("timeout", Callable(self, "_on_snake_move_timer_timeout"))
+
+# Initialize the food node at a random position
+func init_food_node() -> void:
+  # Get all the idle map cell
+  var idle_cells: Array[Vector2i] = []
+  for x in range(1, Configs.MAP_CELL_SIZE_X - 1):
+    for y in range(1, Configs.MAP_CELL_SIZE_Y - 1):
+      if cell_data_[x][y] == MapCellState.IDLE:
+        idle_cells.push_back(Vector2i(x, y))
+  if idle_cells.size() == 0:
+    return  # TODO: End game with success
+  # Get a random coordinate from the idle cells
+  var rand_index: int = randi_range(0, idle_cells.size() - 1)
+  var food_coord: Vector2i = idle_cells[rand_index]
+  if not is_instance_valid(food_):
+    food_ = food_scene_.instantiate()
+    add_child(food_)
+  else:
+    var cur_coord: Vector2i = calc_coord_from_pos(food_.position)
+    cell_data_[cur_coord.x][cur_coord.y] = MapCellState.IDLE
+  food_.position = calc_pos_from_coord(food_coord)
+  cell_data_[food_coord.x][food_coord.y] = MapCellState.FOOD
+
+# Move the snake head node to the next coordinate
+func move_snake_head_node(cur_coord: Vector2i, next_coord: Vector2i) -> void:
+  cell_data_[cur_coord.x][cur_coord.y] = MapCellState.IDLE
+  snake_head_.position = calc_pos_from_coord(next_coord)
+  cell_data_[next_coord.x][next_coord.y] = MapCellState.SNAKE_HEAD
+
+# Move the snake tail node to the place that right after the head node
+func move_snake_tail_node(next_coord: Vector2i) -> void:
   var snake_tail: Node2D = snake_bodies_.pop_back()
-  var tail_prev_coords = calc_coords_from_pos(snake_tail.position)
-  snake_tail.position = calc_pos_from_coords(cur_coords)
+  var tail_prev_coord = calc_coord_from_pos(snake_tail.position)
+  snake_tail.position = calc_pos_from_coord(next_coord)
   snake_bodies_.push_front(snake_tail)
-  cell_data_[tail_prev_coords.x][tail_prev_coords.y] = MapCellState.IDLE
-  cell_data_[cur_coords.x][cur_coords.y] = MapCellState.SNAKE_BODY
+  cell_data_[tail_prev_coord.x][tail_prev_coord.y] = MapCellState.IDLE
+  cell_data_[next_coord.x][next_coord.y] = MapCellState.SNAKE_BODY
 
 # Calculate the position from coordinate
-func calc_pos_from_coords(coords: Vector2i) -> Vector2:
-  var pos_x: float = Configs.MAP_CELL_WIDTH * coords.x
-  var pos_y: float = Configs.MAP_CELL_WIDTH * coords.y
+func calc_pos_from_coord(coord: Vector2i) -> Vector2:
+  var pos_x: float = Configs.MAP_CELL_WIDTH * coord.x
+  var pos_y: float = Configs.MAP_CELL_WIDTH * coord.y
   return Vector2(pos_x, pos_y)
 
 # Calculate the coordinate from position
-func calc_coords_from_pos(pos: Vector2) -> Vector2i:
+func calc_coord_from_pos(pos: Vector2) -> Vector2i:
   var coord_x: int = int(pos.x / Configs.WALL_WIDTH)
   var coord_y: int = int(pos.y / Configs.WALL_WIDTH)
   return Vector2i(coord_x, coord_y)
 
 # Calculate the next coordinate by current coordinate and direction
-func calc_next_coords(coords: Vector2i) -> Vector2i:
+func calc_next_coord(coord: Vector2i) -> Vector2i:
   match (snake_cur_move_dir_):
     SnakeMoveDirection.UP:
-      coords.y -= 1
+      coord.y -= 1
     SnakeMoveDirection.DOWN:
-      coords.y += 1
+      coord.y += 1
     SnakeMoveDirection.LEFT:
-      coords.x -= 1
+      coord.x -= 1
     SnakeMoveDirection.RIGHT:
-      coords.x += 1
+      coord.x += 1
     _:
       pass
-  return coords
+  return coord
 
 # Check if the next move direction is valid or not
 func check_next_move_dir_valid() -> bool:
@@ -141,27 +170,27 @@ func check_next_move_dir_valid() -> bool:
   return true
 
 # Check if the coordinate is valid or not
-func check_coords_valid(coords: Vector2i) -> bool:
-  if coords.x < 0 || coords.x >= Configs.MAP_CELL_SIZE_X:
+func check_coord_valid(coord: Vector2i) -> bool:
+  if coord.x < 0 || coord.x >= Configs.MAP_CELL_SIZE_X:
     return false
-  if coords.y < 0 || coords.y >= Configs.MAP_CELL_SIZE_Y:
+  if coord.y < 0 || coord.y >= Configs.MAP_CELL_SIZE_Y:
     return false
-  if cell_data_[coords.x][coords.y] == MapCellState.WALL:
+  if cell_data_[coord.x][coord.y] == MapCellState.WALL:
     return false
-  if cell_data_[coords.x][coords.y] == MapCellState.SNAKE_BODY:
+  if cell_data_[coord.x][coord.y] == MapCellState.SNAKE_BODY:
     return false
-  if cell_data_[coords.x][coords.y] == MapCellState.SNAKE_HEAD:
+  if cell_data_[coord.x][coord.y] == MapCellState.SNAKE_HEAD:
     return false
   return true
 
 # Check if the coordinate has food on it
-func check_coords_has_food(coords: Vector2i) -> bool:
-  return cell_data_[coords.x][coords.y] == MapCellState.FOOD
+func check_coord_has_food(coord: Vector2i) -> bool:
+  return cell_data_[coord.x][coord.y] == MapCellState.FOOD
 
 # Append a new snake body to the tail
-func add_body_to_tail(coords_x: int, coords_y: int) -> void:
+func add_body_to_tail(coord_x: int, coord_y: int) -> void:
   var snake_body: Node2D = snake_body_scene_.instantiate()
-  snake_body.position = calc_pos_from_coords(Vector2i(coords_x, coords_y))
+  snake_body.position = calc_pos_from_coord(Vector2i(coord_x, coord_y))
   snake_bodies_.push_back(snake_body)
   add_child(snake_body)
 
