@@ -1,64 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://ckwxrxfmni3h4"]
+[gd_scene load_steps=3 format=3 uid="uid://ckwxrxfmni3h4"]
 
 [ext_resource type="Script" path="res://scripts/food.gd" id="1_c03q8"]
 [ext_resource type="Texture2D" uid="uid://cmudsd5n470fe" path="res://assets/images/food.png" id="1_nt0fm"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0hpy6"]
-atlas = ExtResource("1_nt0fm")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nv2kn"]
-atlas = ExtResource("1_nt0fm")
-region = Rect2(64, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2p76y"]
-atlas = ExtResource("1_nt0fm")
-region = Rect2(128, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j5m2m"]
-atlas = ExtResource("1_nt0fm")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_52028"]
-atlas = ExtResource("1_nt0fm")
-region = Rect2(256, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_0ooip"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0hpy6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nv2kn")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2p76y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j5m2m")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_52028")
-}],
-"loop": true,
-"name": &"food",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bd3ph"]
-size = Vector2(56.25, 60)
-
-[node name="food" type="Area2D"]
+[node name="food" type="Node2D"]
 script = ExtResource("1_c03q8")
 
-[node name="animated_sprite" type="AnimatedSprite2D" parent="."]
-position = Vector2(36, 35)
-sprite_frames = SubResource("SpriteFrames_0ooip")
-animation = &"food"
-autoplay = "food"
-frame_progress = 0.394539
-
-[node name="collision" type="CollisionShape2D" parent="."]
-position = Vector2(35.875, 40)
-shape = SubResource("RectangleShape2D_bd3ph")
+[node name="image" type="Sprite2D" parent="."]
+position = Vector2(15, 15)
+texture = ExtResource("1_nt0fm")
