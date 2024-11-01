@@ -85,7 +85,6 @@ func _on_snake_move_timer_timeout() -> void:
     snake_cur_move_dir_ = snake_next_move_dir_
   var cur_coords: Vector2i = calc_coords_from_pos(snake_head_.position)
   var next_coords: Vector2i = calc_next_coords(cur_coords)
-  print(next_coords)
   if not check_coords_valid(next_coords):
     Logger.info("Game Over!")
     return  # TODO: End game with failure
