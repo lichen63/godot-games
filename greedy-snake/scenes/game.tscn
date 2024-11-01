@@ -16,7 +16,7 @@ script = ExtResource("1_15alt")
 snake_head_scene_ = ExtResource("1_6nvoh")
 snake_body_scene_ = ExtResource("3_utqtl")
 food_scene_ = ExtResource("3_epwp3")
-result_panel_ = NodePath("game_result_")
+result_panel_ = NodePath("result_panel_")
 
 [node name="background_" type="ColorRect" parent="."]
 offset_right = 1200.0
@@ -57,13 +57,12 @@ offset_right = 1170.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="game_result_" type="ColorRect" parent="."]
-visible = false
+[node name="result_panel_" type="ColorRect" parent="."]
 offset_right = 1200.0
 offset_bottom = 600.0
 color = Color(1, 1, 1, 0.392157)
 
-[node name="text_" type="Label" parent="game_result_"]
+[node name="text_" type="Label" parent="result_panel_"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -76,7 +75,22 @@ offset_right = 300.0
 offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Game Over!"
+text = "Game Result"
 label_settings = SubResource("LabelSettings_4xkwc")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="button_" type="Button" parent="result_panel_"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.8
+anchor_right = 0.5
+anchor_bottom = 0.8
+offset_left = -150.0
+offset_top = -30.0
+offset_right = 150.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Button"

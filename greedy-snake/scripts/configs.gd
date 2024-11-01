@@ -1,19 +1,14 @@
 extends Node
 
-# Group names
-const GROUP_NAME_WALLS: String = "group_walls"
-const GROUP_NAME_SNAKE: String = "group_snake"
-const GROUP_NAME_FOODS: String = "group_foods"
-
 # Action event names
 const ACTION_SNAKE_LEFT: String = "snake_left"
 const ACTION_SNAKE_RIGHT: String = "snake_right"
 const ACTION_SNAKE_UP: String = "snake_up"
 const ACTION_SNAKE_DOWN: String = "snake_down"
 
-# Names of snake head and body
-const NODE_NAME_SNAKE_HEAD: String = "snake_head"
-const NODE_NAME_SNAKE_BODY_PREFIX: String = "snake_body_"
+# Game end string text
+const GAME_END_SUCCESS: String = "Success!"
+const GAME_END_FAILURE: String = "Game Over!"
 
 # Grid map size
 const MAP_WIDTH: int = 1200

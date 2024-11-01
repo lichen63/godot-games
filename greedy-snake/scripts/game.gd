@@ -2,6 +2,7 @@ extends Node
 
 enum MapCellState {IDLE, WALL, SNAKE_HEAD, SNAKE_BODY, FOOD}
 enum SnakeMoveDirection {UP, DOWN, LEFT, RIGHT}
+enum GameState {IDLE, IN_PROGRESS, SUCCESS, FAILURE}
 
 @warning_ignore("integer_division")
 const SNAKE_HEAD_INIT_COORD_X: int = Configs.MAP_CELL_SIZE_X / 2
@@ -22,6 +23,7 @@ var snake_move_timer_ :Timer = null
 var snake_cur_move_dir_: SnakeMoveDirection = SNAKE_DEFAULT_MOVE_DIR
 var snake_next_move_dir_: SnakeMoveDirection = SNAKE_DEFAULT_MOVE_DIR
 var food_: Node2D = null
+var game_state_: GameState = GameState.IDLE
 
 # Called when the node enters the scene tree for the first time
 func _ready() -> void:
@@ -140,6 +142,22 @@ func add_new_body_node(coord: Vector2i) -> void:
 # Init the game result panel
 func init_game_result_panel() -> void:
   result_panel_.hide()
+
+# Update the game state, show or hide the result panel and update the label on it
+func update_game_state(state: GameState) -> void:
+  match state:
+    GameState.IDLE:
+      result_panel_.hide()
+    GameState.IN_PROGRESS:
+      result_panel_.hide()
+    GameState.SUCCESS:
+      result_panel_.get_node("text").text = Configs.GAME_END_SUCCESS
+      result_panel_.show()
+    GameState.FAILURE:
+      result_panel_.get_node("text").text = Configs.GAME_END_FAILURE
+      result_panel_.show()
+    _:
+      pass
 
 # Calculate the position from coordinate
 func calc_pos_from_coord(coord: Vector2i) -> Vector2:
