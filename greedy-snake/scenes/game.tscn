@@ -1,18 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkm0o4fs51xco"]
+[gd_scene load_steps=5 format=3 uid="uid://bkm0o4fs51xco"]
 
 [ext_resource type="PackedScene" uid="uid://dp4gc8qwkfx0l" path="res://scenes/snake_head.tscn" id="1_6nvoh"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_15alt"]
 [ext_resource type="PackedScene" uid="uid://ckwxrxfmni3h4" path="res://scenes/food.tscn" id="3_epwp3"]
 [ext_resource type="PackedScene" uid="uid://douhdn23beijy" path="res://scenes/snake_body.tscn" id="3_utqtl"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nye5l"]
-size = Vector2(30, 600)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vnrkj"]
-size = Vector2(1150, 30)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kctm5"]
-size = Vector2(1140, 30)
 
 [node name="game" type="Node"]
 script = ExtResource("1_15alt")
@@ -20,57 +11,46 @@ snake_head_scene_ = ExtResource("1_6nvoh")
 snake_body_scene_ = ExtResource("3_utqtl")
 food_scene_ = ExtResource("3_epwp3")
 
-[node name="background" type="ColorRect" parent="."]
+[node name="background_" type="ColorRect" parent="."]
 offset_right = 1200.0
 offset_bottom = 600.0
 
-[node name="walls" type="Node" parent="."]
+[node name="walls_" type="Node" parent="."]
 
-[node name="left" type="Area2D" parent="walls"]
+[node name="left_" type="Node2D" parent="walls_"]
 
-[node name="color" type="ColorRect" parent="walls/left"]
+[node name="color_" type="ColorRect" parent="walls_/left_"]
 offset_right = 30.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="collision" type="CollisionShape2D" parent="walls/left"]
-position = Vector2(15, 300)
-shape = SubResource("RectangleShape2D_nye5l")
-
-[node name="right" type="Area2D" parent="walls"]
+[node name="right_" type="Node2D" parent="walls_"]
 position = Vector2(1180, 0)
 
-[node name="color" type="ColorRect" parent="walls/right"]
+[node name="color_" type="ColorRect" parent="walls_/right_"]
 offset_left = -10.0
 offset_right = 20.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="collision" type="CollisionShape2D" parent="walls/right"]
-position = Vector2(5, 300)
-shape = SubResource("RectangleShape2D_nye5l")
+[node name="top_" type="Node2D" parent="walls_"]
 
-[node name="top" type="Area2D" parent="walls"]
-
-[node name="color" type="ColorRect" parent="walls/top"]
+[node name="color_" type="ColorRect" parent="walls_/top_"]
 offset_left = 30.0
 offset_right = 1170.0
 offset_bottom = 30.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="collision" type="CollisionShape2D" parent="walls/top"]
-position = Vector2(605, 15)
-shape = SubResource("RectangleShape2D_vnrkj")
+[node name="bottom_" type="Node2D" parent="walls_"]
 
-[node name="bottom" type="Area2D" parent="walls"]
-
-[node name="color" type="ColorRect" parent="walls/bottom"]
+[node name="color_" type="ColorRect" parent="walls_/bottom_"]
 offset_left = 30.0
 offset_top = 570.0
 offset_right = 1170.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="collision" type="CollisionShape2D" parent="walls/bottom"]
-position = Vector2(600, 585)
-shape = SubResource("RectangleShape2D_kctm5")
+[node name="game_result_" type="ColorRect" parent="."]
+offset_right = 1200.0
+offset_bottom = 600.0
+color = Color(1, 1, 1, 0.392157)
