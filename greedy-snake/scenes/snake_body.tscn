@@ -1,10 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://douhdn23beijy"]
+[gd_scene load_steps=2 format=3 uid="uid://douhdn23beijy"]
 
-[ext_resource type="Script" path="res://scripts/snake_body.gd" id="1_0dj5v"]
 [ext_resource type="Texture2D" uid="uid://c2t6y2056hq6i" path="res://assets/images/snake_body.png" id="1_ecfwj"]
 
 [node name="snake_body" type="Node2D"]
-script = ExtResource("1_0dj5v")
 
 [node name="image" type="Sprite2D" parent="."]
 position = Vector2(15, 15)

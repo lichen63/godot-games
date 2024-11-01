@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkm0o4fs51xco"]
+[gd_scene load_steps=8 format=3 uid="uid://bkm0o4fs51xco"]
 
 [ext_resource type="PackedScene" uid="uid://dp4gc8qwkfx0l" path="res://scenes/snake_head.tscn" id="1_6nvoh"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_15alt"]
-[ext_resource type="Script" path="res://scripts/walls.gd" id="2_raxs3"]
 [ext_resource type="PackedScene" uid="uid://ckwxrxfmni3h4" path="res://scenes/food.tscn" id="3_epwp3"]
 [ext_resource type="PackedScene" uid="uid://douhdn23beijy" path="res://scenes/snake_body.tscn" id="3_utqtl"]
 
@@ -28,7 +27,6 @@ offset_bottom = 600.0
 [node name="walls" type="Node" parent="."]
 
 [node name="left" type="Area2D" parent="walls"]
-script = ExtResource("2_raxs3")
 
 [node name="color" type="ColorRect" parent="walls/left"]
 offset_right = 30.0
@@ -41,7 +39,6 @@ shape = SubResource("RectangleShape2D_nye5l")
 
 [node name="right" type="Area2D" parent="walls"]
 position = Vector2(1180, 0)
-script = ExtResource("2_raxs3")
 
 [node name="color" type="ColorRect" parent="walls/right"]
 offset_left = -10.0
@@ -54,7 +51,6 @@ position = Vector2(5, 300)
 shape = SubResource("RectangleShape2D_nye5l")
 
 [node name="top" type="Area2D" parent="walls"]
-script = ExtResource("2_raxs3")
 
 [node name="color" type="ColorRect" parent="walls/top"]
 offset_left = 30.0
@@ -67,7 +63,6 @@ position = Vector2(605, 15)
 shape = SubResource("RectangleShape2D_vnrkj")
 
 [node name="bottom" type="Area2D" parent="walls"]
-script = ExtResource("2_raxs3")
 
 [node name="color" type="ColorRect" parent="walls/bottom"]
 offset_left = 30.0
