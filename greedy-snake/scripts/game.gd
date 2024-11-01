@@ -13,6 +13,7 @@ const SNAKE_DEFAULT_MOVE_DIR: SnakeMoveDirection = SnakeMoveDirection.RIGHT
 @export var snake_head_scene_: PackedScene = null
 @export var snake_body_scene_: PackedScene = null
 @export var food_scene_: PackedScene = null
+@export var result_panel_: Node = null
 var cell_data_: Array = []
 var snake_head_: Node2D = null
 var snake_bodies_: Array[Node2D] = []
@@ -24,14 +25,11 @@ var food_: Node2D = null
 
 # Called when the node enters the scene tree for the first time
 func _ready() -> void:
-  # Initialize the cell state
   init_map_cell_state()
-  # Initialize the snake
   init_snake_node()
-  # Initialize the timer for moving snake
   init_snake_move_timer()
-  # Initialize the food
   refresh_food_node()
+  init_game_result_panel()
 
 # Called during the physics processing step of the main loop
 func _physics_process(_delta: float) -> void:
@@ -138,6 +136,10 @@ func add_new_body_node(coord: Vector2i) -> void:
   snake_bodies_.push_front(snake_body)
   add_child(snake_body)
   cell_data_[coord.x][coord.y] = MapCellState.SNAKE_BODY
+
+# Init the game result panel
+func init_game_result_panel() -> void:
+  result_panel_.hide()
 
 # Calculate the position from coordinate
 func calc_pos_from_coord(coord: Vector2i) -> Vector2:
