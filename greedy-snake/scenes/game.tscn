@@ -11,12 +11,15 @@ font_color = Color(0.996094, 0.019455, 0.019455, 1)
 outline_size = 10
 outline_color = Color(0.0214844, 0.0208549, 0.0208549, 1)
 
-[node name="game" type="Node" node_paths=PackedStringArray("result_panel_")]
+[node name="game" type="Node" node_paths=PackedStringArray("snake_move_timer_", "snake_nodes_", "result_panel_", "result_panel_text_")]
 script = ExtResource("1_15alt")
 snake_head_scene_ = ExtResource("1_6nvoh")
 snake_body_scene_ = ExtResource("3_utqtl")
+snake_move_timer_ = NodePath("snake_move_timer_")
+snake_nodes_ = NodePath("snake_nodes_")
 food_scene_ = ExtResource("3_epwp3")
 result_panel_ = NodePath("result_panel_")
+result_panel_text_ = NodePath("result_panel_/result_text_")
 
 [node name="background_" type="ColorRect" parent="."]
 offset_right = 1200.0
@@ -57,12 +60,14 @@ offset_right = 1170.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
+[node name="snake_nodes_" type="Node2D" parent="."]
+
 [node name="result_panel_" type="ColorRect" parent="."]
 offset_right = 1200.0
 offset_bottom = 600.0
-color = Color(1, 1, 1, 0.392157)
+color = Color(0.168991, 0.579666, 0.865234, 1)
 
-[node name="text_" type="Label" parent="result_panel_"]
+[node name="result_text_" type="Label" parent="result_panel_"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -80,7 +85,7 @@ label_settings = SubResource("LabelSettings_4xkwc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="button_" type="Button" parent="result_panel_"]
+[node name="start_button_" type="Button" parent="result_panel_"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -93,4 +98,11 @@ offset_right = 150.0
 offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Button"
+theme_override_font_sizes/font_size = 40
+text = "Start"
+
+[node name="snake_move_timer_" type="Timer" parent="."]
+wait_time = 0.3
+
+[connection signal="button_down" from="result_panel_/start_button_" to="." method="_on_start_button__button_down"]
+[connection signal="timeout" from="snake_move_timer_" to="." method="_on_snake_move_timer_timeout"]

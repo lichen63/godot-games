@@ -2,7 +2,7 @@ extends Node
 
 enum MapCellState {IDLE, WALL, SNAKE_HEAD, SNAKE_BODY, FOOD}
 enum SnakeMoveDirection {UP, DOWN, LEFT, RIGHT}
-enum GameState {IDLE, IN_PROGRESS, SUCCESS, FAILURE}
+enum GameState {IDLE, START, SUCCESS, FAILURE}
 
 @warning_ignore("integer_division")
 const SNAKE_HEAD_INIT_COORD_X: int = Configs.MAP_CELL_SIZE_X / 2
@@ -13,13 +13,14 @@ const SNAKE_DEFAULT_MOVE_DIR: SnakeMoveDirection = SnakeMoveDirection.RIGHT
 
 @export var snake_head_scene_: PackedScene = null
 @export var snake_body_scene_: PackedScene = null
+@export var snake_move_timer_ :Timer = null
+@export var snake_nodes_: Node2D = null
 @export var food_scene_: PackedScene = null
 @export var result_panel_: Node = null
+@export var result_panel_text_: Node = null
 var cell_data_: Array = []
 var snake_head_: Node2D = null
 var snake_bodies_: Array[Node2D] = []
-var snake_move_timer_ :Timer = null
-@export var snake_move_time_interval_ = 0.3
 var snake_cur_move_dir_: SnakeMoveDirection = SNAKE_DEFAULT_MOVE_DIR
 var snake_next_move_dir_: SnakeMoveDirection = SNAKE_DEFAULT_MOVE_DIR
 var food_: Node2D = null
@@ -27,11 +28,7 @@ var game_state_: GameState = GameState.IDLE
 
 # Called when the node enters the scene tree for the first time
 func _ready() -> void:
-  init_map_cell_state()
-  init_snake_node()
-  init_snake_move_timer()
-  refresh_food_node()
-  init_game_result_panel()
+  update_game_state(GameState.IDLE)
 
 # Called during the physics processing step of the main loop
 func _physics_process(_delta: float) -> void:
@@ -46,6 +43,8 @@ func _physics_process(_delta: float) -> void:
 
 # Snake move timer timeout event
 func _on_snake_move_timer_timeout() -> void:
+  if game_state_ != GameState.START:
+    return
   # If next direction is opposite to current, ignore it
   if not check_next_move_dir_valid():
     # Restore the next move direction
@@ -55,8 +54,8 @@ func _on_snake_move_timer_timeout() -> void:
   var cur_coord: Vector2i = calc_coord_from_pos(snake_head_.position)
   var next_coord: Vector2i = calc_next_coord(cur_coord)
   if not check_coord_valid(next_coord):
-    Logger.info("Game Over!")
-    return  # TODO: End game with failure
+    update_game_state(GameState.FAILURE)
+    return
   if check_coord_has_food(next_coord):
     refresh_food_node()
     add_new_body_node(cur_coord)
@@ -64,6 +63,9 @@ func _on_snake_move_timer_timeout() -> void:
     # Move the tail snake body node to right after head node
     move_snake_tail_node(cur_coord)
   move_snake_head_node(next_coord)
+
+func _on_start_button__button_down() -> void:
+  update_game_state(GameState.START)
 
 # Initialize the state of map cells
 func init_map_cell_state() -> void:
@@ -80,20 +82,17 @@ func init_map_cell_state() -> void:
 
 # Initialize the snake head and bodies
 func init_snake_node() -> void:
-  snake_head_ = snake_head_scene_.instantiate()
-  snake_head_.position = calc_pos_from_coord(Vector2i(SNAKE_HEAD_INIT_COORD_X, SNAKE_HEAD_INIT_COORD_Y))
-  add_child(snake_head_)
+  if not is_instance_valid(snake_head_):
+    snake_head_ = snake_head_scene_.instantiate()
+    snake_nodes_.add_child(snake_head_)
+  move_snake_head_node(Vector2i(SNAKE_HEAD_INIT_COORD_X, SNAKE_HEAD_INIT_COORD_Y))
+  # Remove all snake body nodes that were added in previous game
+  for body in snake_bodies_:
+    snake_nodes_.remove_child(body)
+  snake_bodies_.clear()
+  # Then add the initial body nodes
   for i in SNAKE_BODY_INIT_LENGTH:
     add_body_to_tail(Vector2i(SNAKE_HEAD_INIT_COORD_X - i - 1, SNAKE_HEAD_INIT_COORD_Y))
-
-# Initialize the snake move timer
-func init_snake_move_timer() -> void:
-  snake_move_timer_ = Timer.new()
-  snake_move_timer_.wait_time = snake_move_time_interval_
-  snake_move_timer_.one_shot = false
-  snake_move_timer_.autostart = true
-  add_child(snake_move_timer_)
-  snake_move_timer_.connect("timeout", Callable(self, "_on_snake_move_timer_timeout"))
 
 # Initialize or refresh the food node at a random position
 func refresh_food_node() -> void:
@@ -104,7 +103,7 @@ func refresh_food_node() -> void:
       if cell_data_[x][y] == MapCellState.IDLE:
         idle_cells.push_back(Vector2i(x, y))
   if idle_cells.size() == 0:
-    return  # TODO: End game with success
+    update_game_state(GameState.SUCCESS)
   # Get a random coordinate from the idle cells
   var rand_index: int = randi_range(0, idle_cells.size() - 1)
   var next_coord: Vector2i = idle_cells[rand_index]
@@ -136,28 +135,43 @@ func add_new_body_node(coord: Vector2i) -> void:
   var snake_body: Node2D = snake_body_scene_.instantiate()
   snake_body.position = calc_pos_from_coord(coord)
   snake_bodies_.push_front(snake_body)
-  add_child(snake_body)
+  snake_nodes_.add_child(snake_body)
   cell_data_[coord.x][coord.y] = MapCellState.SNAKE_BODY
-
-# Init the game result panel
-func init_game_result_panel() -> void:
-  result_panel_.hide()
+  if snake_bodies_.size() >= 5:
+    update_game_state(GameState.SUCCESS)
 
 # Update the game state, show or hide the result panel and update the label on it
 func update_game_state(state: GameState) -> void:
-  match state:
+  game_state_ = state
+  match game_state_:
     GameState.IDLE:
-      result_panel_.hide()
-    GameState.IN_PROGRESS:
+      snake_move_timer_.stop()
+      result_panel_text_.text = Configs.GAME_START_IDLE
+      result_panel_.show()
+    GameState.START:
+      reset_game_scene()
+      snake_move_timer_.start()
       result_panel_.hide()
     GameState.SUCCESS:
-      result_panel_.get_node("text").text = Configs.GAME_END_SUCCESS
+      reset_game_scene()
+      snake_move_timer_.stop()
+      result_panel_text_.text = Configs.GAME_END_SUCCESS
       result_panel_.show()
     GameState.FAILURE:
-      result_panel_.get_node("text").text = Configs.GAME_END_FAILURE
+      reset_game_scene()
+      init_snake_node()
+      snake_move_timer_.stop()
+      result_panel_text_.text = Configs.GAME_END_FAILURE
       result_panel_.show()
     _:
       pass
+
+# Reset the game scene to idle
+func reset_game_scene() -> void:
+  init_map_cell_state()
+  init_snake_node()
+  refresh_food_node()
+  snake_cur_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
 
 # Calculate the position from coordinate
 func calc_pos_from_coord(coord: Vector2i) -> Vector2:
@@ -221,7 +235,7 @@ func add_body_to_tail(coord: Vector2i) -> void:
   var snake_body: Node2D = snake_body_scene_.instantiate()
   snake_body.position = calc_pos_from_coord(coord)
   snake_bodies_.push_back(snake_body)
-  add_child(snake_body)
+  snake_nodes_.add_child(snake_body)
 
 func get_snake_length() -> int:
   return snake_bodies_.size()

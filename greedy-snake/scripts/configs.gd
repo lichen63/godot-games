@@ -7,6 +7,7 @@ const ACTION_SNAKE_UP: String = "snake_up"
 const ACTION_SNAKE_DOWN: String = "snake_down"
 
 # Game end string text
+const GAME_START_IDLE = "Start Game!"
 const GAME_END_SUCCESS: String = "Success!"
 const GAME_END_FAILURE: String = "Game Over!"
 
