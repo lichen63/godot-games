@@ -63,6 +63,7 @@ color = Color(0.275391, 0.257103, 0.257103, 1)
 [node name="snake_nodes_" type="Node2D" parent="."]
 
 [node name="result_panel_" type="ColorRect" parent="."]
+z_index = 1
 offset_right = 1200.0
 offset_bottom = 600.0
 color = Color(0.168991, 0.579666, 0.865234, 1)
