@@ -8,7 +8,6 @@ enum GameState {IDLE, START, SUCCESS, FAILURE}
 const SNAKE_HEAD_INIT_COORD_X: int = Configs.MAP_CELL_SIZE_X / 2
 @warning_ignore("integer_division")
 const SNAKE_HEAD_INIT_COORD_Y: int = Configs.MAP_CELL_SIZE_Y / 2
-const SNAKE_BODY_INIT_LENGTH: int = 3
 const SNAKE_DEFAULT_MOVE_DIR: SnakeMoveDirection = SnakeMoveDirection.RIGHT
 
 @export var snake_head_scene_: PackedScene = null
@@ -92,7 +91,7 @@ func init_snake_node() -> void:
     snake_nodes_.remove_child(body)
   snake_bodies_.clear()
   # Then add the initial body nodes
-  for i in SNAKE_BODY_INIT_LENGTH:
+  for i in Configs.SNAKE_BODY_INIT_LENGTH:
     add_body_to_tail(Vector2i(SNAKE_HEAD_INIT_COORD_X - i - 1, SNAKE_HEAD_INIT_COORD_Y))
 
 # Initialize or refresh the food node at a random position
@@ -138,7 +137,7 @@ func add_new_body_node(coord: Vector2i) -> void:
   snake_bodies_.push_front(snake_body)
   snake_nodes_.add_child(snake_body)
   cell_data_[coord.x][coord.y] = MapCellState.SNAKE_BODY
-  if snake_bodies_.size() >= 5:
+  if snake_bodies_.size() >= Configs.SNAKE_BODY_MAX_LENGTH:
     update_game_state(GameState.SUCCESS)
 
 # Update the game state, show or hide the result panel and update the label on it
