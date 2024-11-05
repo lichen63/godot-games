@@ -13,7 +13,7 @@ const SNAKE_DEFAULT_MOVE_DIR: SnakeMoveDirection = SnakeMoveDirection.RIGHT
 
 @export var snake_head_scene_: PackedScene = null
 @export var snake_body_scene_: PackedScene = null
-@export var snake_move_timer_ :Timer = null
+@export var snake_move_timer_: Timer = null
 @export var snake_nodes_: Node2D = null
 @export var food_scene_: PackedScene = null
 @export var result_panel_: Node = null
@@ -69,6 +69,7 @@ func _on_start_button__button_down() -> void:
 
 # Initialize the state of map cells
 func init_map_cell_state() -> void:
+  cell_data_.clear()
   for x in range(0, Configs.MAP_CELL_SIZE_X):
     var column_data: Array = []
     column_data.push_back(MapCellState.WALL)
@@ -172,6 +173,7 @@ func reset_game_scene() -> void:
   init_snake_node()
   refresh_food_node()
   snake_cur_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
+  snake_next_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
 
 # Calculate the position from coordinate
 func calc_pos_from_coord(coord: Vector2i) -> Vector2:
