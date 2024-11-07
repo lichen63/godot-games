@@ -53,8 +53,6 @@ func exit_state(state: Configs.GameState) -> void:
 func enter_state(state: Configs.GameState) -> void:
     match state:
         Configs.GameState.IDLE:
-            self.hide()
-        Configs.GameState.PLAYING:
             if not is_instance_valid(snake_head_):
                 snake_head_ = snake_head_scene_.instantiate()
                 self.add_child(snake_head_)
@@ -62,6 +60,8 @@ func enter_state(state: Configs.GameState) -> void:
             move_head_node(init_coord, init_coord)
             for i in range(Configs.SNAKE_BODY_INIT_LENGTH - 1, -1, -1):
                 add_new_body(Vector2i(SNAKE_HEAD_INIT_COORD_X - i - 1, SNAKE_HEAD_INIT_COORD_Y))
+            self.hide()
+        Configs.GameState.PLAYING:
             self.show()
         Configs.GameState.SUCCESS:
             for body in snake_bodies_:

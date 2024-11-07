@@ -19,9 +19,9 @@ func exit_state(state: Configs.GameState) -> void:
 func enter_state(state: Configs.GameState) -> void:
     match state:
         Configs.GameState.IDLE:
+            refresh_position()
             self.hide()
         Configs.GameState.PLAYING:
-            refresh_position()
             self.show()
         Configs.GameState.SUCCESS:
             self.hide()
