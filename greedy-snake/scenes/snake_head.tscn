@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://cl16pnygbj7w" path="res://assets/images/snake_head.png" id="1_aaebq"]
 
-[node name="snake_head" type="Node2D"]
+[node name="SnakeHead" type="Node2D"]
 
-[node name="image" type="Sprite2D" parent="."]
+[node name="Image" type="Sprite2D" parent="."]
 position = Vector2(15, 15)
 texture = ExtResource("1_aaebq")

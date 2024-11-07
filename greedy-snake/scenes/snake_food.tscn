@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckwxrxfmni3h4"]
+
+[ext_resource type="Texture2D" uid="uid://cmudsd5n470fe" path="res://assets/images/food.png" id="1_nt0fm"]
+[ext_resource type="Script" path="res://scripts/snake_food.gd" id="1_yju6w"]
+
+[node name="SnakeFood" type="Node2D"]
+script = ExtResource("1_yju6w")
+
+[node name="Image" type="Sprite2D" parent="."]
+position = Vector2(15, 15)
+texture = ExtResource("1_nt0fm")

@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkm0o4fs51xco"]
+[gd_scene load_steps=9 format=3 uid="uid://bkm0o4fs51xco"]
 
 [ext_resource type="PackedScene" uid="uid://dp4gc8qwkfx0l" path="res://scenes/snake_head.tscn" id="1_6nvoh"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_15alt"]
-[ext_resource type="PackedScene" uid="uid://ckwxrxfmni3h4" path="res://scenes/food.tscn" id="3_epwp3"]
+[ext_resource type="PackedScene" uid="uid://ckwxrxfmni3h4" path="res://scenes/snake_food.tscn" id="3_epwp3"]
 [ext_resource type="PackedScene" uid="uid://douhdn23beijy" path="res://scenes/snake_body.tscn" id="3_utqtl"]
+[ext_resource type="Script" path="res://scripts/snake_nodes.gd" id="5_bqaf8"]
+[ext_resource type="Script" path="res://scripts/result_panel.gd" id="6_7p3vl"]
+[ext_resource type="Script" path="res://scripts/snake_move_timer.gd" id="6_lsv3p"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4xkwc"]
 font_size = 100
@@ -11,64 +14,68 @@ font_color = Color(0.996094, 0.019455, 0.019455, 1)
 outline_size = 10
 outline_color = Color(0.0214844, 0.0208549, 0.0208549, 1)
 
-[node name="game" type="Node" node_paths=PackedStringArray("snake_move_timer_", "snake_nodes_", "result_panel_", "result_panel_text_")]
+[node name="Game" type="Node" node_paths=PackedStringArray("snake_move_timer_", "snake_nodes_", "result_panel_", "snake_food_")]
 script = ExtResource("1_15alt")
-snake_head_scene_ = ExtResource("1_6nvoh")
-snake_body_scene_ = ExtResource("3_utqtl")
-snake_move_timer_ = NodePath("snake_move_timer_")
-snake_nodes_ = NodePath("snake_nodes_")
-food_scene_ = ExtResource("3_epwp3")
-result_panel_ = NodePath("result_panel_")
-result_panel_text_ = NodePath("result_panel_/result_text_")
+snake_move_timer_ = NodePath("SnakeMoveTimer")
+snake_nodes_ = NodePath("SnakeNodes")
+result_panel_ = NodePath("ResultPanel")
+snake_food_ = NodePath("SnakeFood")
 
-[node name="background_" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 offset_right = 1200.0
 offset_bottom = 600.0
 
-[node name="walls_" type="Node" parent="."]
+[node name="Walls" type="Node" parent="."]
 
-[node name="left_" type="Node2D" parent="walls_"]
+[node name="Left" type="Node2D" parent="Walls"]
 
-[node name="color_" type="ColorRect" parent="walls_/left_"]
+[node name="Color" type="ColorRect" parent="Walls/Left"]
 offset_right = 30.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="right_" type="Node2D" parent="walls_"]
+[node name="Right" type="Node2D" parent="Walls"]
 position = Vector2(1180, 0)
 
-[node name="color_" type="ColorRect" parent="walls_/right_"]
+[node name="Color" type="ColorRect" parent="Walls/Right"]
 offset_left = -10.0
 offset_right = 20.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="top_" type="Node2D" parent="walls_"]
+[node name="Top" type="Node2D" parent="Walls"]
 
-[node name="color_" type="ColorRect" parent="walls_/top_"]
+[node name="Color" type="ColorRect" parent="Walls/Top"]
 offset_left = 30.0
 offset_right = 1170.0
 offset_bottom = 30.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="bottom_" type="Node2D" parent="walls_"]
+[node name="Bottom" type="Node2D" parent="Walls"]
 
-[node name="color_" type="ColorRect" parent="walls_/bottom_"]
+[node name="Color" type="ColorRect" parent="Walls/Bottom"]
 offset_left = 30.0
 offset_top = 570.0
 offset_right = 1170.0
 offset_bottom = 600.0
 color = Color(0.275391, 0.257103, 0.257103, 1)
 
-[node name="snake_nodes_" type="Node2D" parent="."]
+[node name="SnakeFood" parent="." instance=ExtResource("3_epwp3")]
+position = Vector2(800, 300)
 
-[node name="result_panel_" type="ColorRect" parent="."]
+[node name="SnakeNodes" type="Node2D" parent="."]
+script = ExtResource("5_bqaf8")
+snake_head_scene_ = ExtResource("1_6nvoh")
+snake_body_scene_ = ExtResource("3_utqtl")
+
+[node name="ResultPanel" type="ColorRect" parent="."]
 z_index = 1
 offset_right = 1200.0
 offset_bottom = 600.0
 color = Color(0.168991, 0.579666, 0.865234, 1)
+script = ExtResource("6_7p3vl")
 
-[node name="result_text_" type="Label" parent="result_panel_"]
+[node name="ResultText" type="Label" parent="ResultPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -86,7 +93,7 @@ label_settings = SubResource("LabelSettings_4xkwc")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="start_button_" type="Button" parent="result_panel_"]
+[node name="StartButton" type="Button" parent="ResultPanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -102,8 +109,9 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 text = "Start"
 
-[node name="snake_move_timer_" type="Timer" parent="."]
+[node name="SnakeMoveTimer" type="Timer" parent="."]
 wait_time = 0.3
+script = ExtResource("6_lsv3p")
 
-[connection signal="button_down" from="result_panel_/start_button_" to="." method="_on_start_button__button_down"]
-[connection signal="timeout" from="snake_move_timer_" to="." method="_on_snake_move_timer_timeout"]
+[connection signal="button_down" from="ResultPanel/StartButton" to="ResultPanel" method="_on_start_button_button_down"]
+[connection signal="timeout" from="SnakeMoveTimer" to="." method="_on_snake_move_timer_timeout"]

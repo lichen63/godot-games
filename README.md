@@ -4,6 +4,10 @@ This repo contains a collection of games that build from Godot, a free and open 
 
 I make these games partly for practice and partly for testing the functions.
 
+## Game lists
+
+- Greedy Snake
+
 ## Sources of game assets
 
 - Images

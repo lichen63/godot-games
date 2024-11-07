@@ -5,11 +5,13 @@ const ACTION_SNAKE_LEFT: String = "snake_left"
 const ACTION_SNAKE_RIGHT: String = "snake_right"
 const ACTION_SNAKE_UP: String = "snake_up"
 const ACTION_SNAKE_DOWN: String = "snake_down"
+const ACTION_GAME_PAUSE: String = "game_pause"
 
 # Game end string text
 const GAME_START_IDLE = "Start Game!"
 const GAME_END_SUCCESS: String = "Success!"
 const GAME_END_FAILURE: String = "Game Over!"
+const GAME_PAUSED: String = "Paused"
 
 # Grid map size
 const MAP_WIDTH: int = 1200
@@ -26,5 +28,12 @@ const SNAKE_NODE_WIDTH: int = 30
 const SNAKE_NODE_HEIGHT: int = 30
 
 # Length of snake body
-const SNAKE_BODY_INIT_LENGTH: int = 3
-const SNAKE_BODY_MAX_LENGTH: int = (MAP_CELL_SIZE_X - 1) * (MAP_CELL_SIZE_Y - 1) - 2
+const SNAKE_BODY_INIT_LENGTH: int = 4
+# const SNAKE_BODY_MAX_LENGTH: int = (MAP_CELL_SIZE_X - 1) * (MAP_CELL_SIZE_Y - 1) - 2
+const SNAKE_BODY_MAX_LENGTH: int = 6
+
+# Snake move direction
+enum SnakeMoveDirection {UP, DOWN, LEFT, RIGHT}
+
+# Game state
+enum GameState {IDLE, PLAYING, SUCCESS, FAILURE, PAUSED}
