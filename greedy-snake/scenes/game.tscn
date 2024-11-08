@@ -113,5 +113,7 @@ text = "Start"
 wait_time = 0.3
 script = ExtResource("6_lsv3p")
 
+[connection signal="on_snake_moved_to_coord" from="SnakeNodes" to="SnakeFood" method="_on_snake_nodes_on_snake_movd_to_coord"]
+[connection signal="on_snake_moving_to_coord" from="SnakeNodes" to="." method="_on_snake_nodes_on_snake_moving_to_coord"]
 [connection signal="button_down" from="ResultPanel/StartButton" to="ResultPanel" method="_on_start_button_button_down"]
-[connection signal="timeout" from="SnakeMoveTimer" to="." method="_on_snake_move_timer_timeout"]
+[connection signal="timeout" from="SnakeMoveTimer" to="SnakeNodes" method="_on_snake_move_timer_timeout"]
