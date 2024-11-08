@@ -67,11 +67,19 @@ func enter_state(state: Configs.GameState) -> void:
             for body in snake_bodies_:
                 self.remove_child(body)
             snake_bodies_.clear()
+            var init_coord: Vector2i = Vector2i(SNAKE_HEAD_INIT_COORD_X, SNAKE_HEAD_INIT_COORD_Y)
+            move_head_node(init_coord, init_coord)
+            for i in range(Configs.SNAKE_BODY_INIT_LENGTH - 1, -1, -1):
+                add_new_body(Vector2i(SNAKE_HEAD_INIT_COORD_X - i - 1, SNAKE_HEAD_INIT_COORD_Y))
             self.hide()
         Configs.GameState.FAILURE:
             for body in snake_bodies_:
                 self.remove_child(body)
             snake_bodies_.clear()
+            var init_coord: Vector2i = Vector2i(SNAKE_HEAD_INIT_COORD_X, SNAKE_HEAD_INIT_COORD_Y)
+            move_head_node(init_coord, init_coord)
+            for i in range(Configs.SNAKE_BODY_INIT_LENGTH - 1, -1, -1):
+                add_new_body(Vector2i(SNAKE_HEAD_INIT_COORD_X - i - 1, SNAKE_HEAD_INIT_COORD_Y))
             self.hide()
         Configs.GameState.PAUSED:
             self.hide()

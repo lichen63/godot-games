@@ -24,8 +24,10 @@ func enter_state(state: Configs.GameState) -> void:
         Configs.GameState.PLAYING:
             self.show()
         Configs.GameState.SUCCESS:
+            refresh_position()
             self.hide()
         Configs.GameState.FAILURE:
+            refresh_position()
             self.hide()
         Configs.GameState.PAUSED:
             self.hide()

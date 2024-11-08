@@ -29,8 +29,7 @@ const SNAKE_NODE_HEIGHT: int = 30
 
 # Length of snake body
 const SNAKE_BODY_INIT_LENGTH: int = 4
-# const SNAKE_BODY_MAX_LENGTH: int = (MAP_CELL_SIZE_X - 1) * (MAP_CELL_SIZE_Y - 1) - 2
-const SNAKE_BODY_MAX_LENGTH: int = 6
+const SNAKE_BODY_MAX_LENGTH: int = (MAP_CELL_SIZE_X - 1) * (MAP_CELL_SIZE_Y - 1) - 2
 
 # Snake move direction
 enum SnakeMoveDirection {UP, DOWN, LEFT, RIGHT}

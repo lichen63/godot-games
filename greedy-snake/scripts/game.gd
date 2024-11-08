@@ -91,18 +91,19 @@ func enter_state(state: Configs.GameState) -> void:
         Configs.GameState.PLAYING:
             pass
         Configs.GameState.SUCCESS:
+            MapController.reset_map_cell_state()
+            snake_cur_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
+            snake_next_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
             pass
         Configs.GameState.FAILURE:
+            MapController.reset_map_cell_state()
+            snake_cur_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
+            snake_next_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
             pass
         Configs.GameState.PAUSED:
             pass
         _:
             pass
-
-# Reset the game scene to idle
-func reset_game_scene() -> void:
-    snake_cur_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
-    snake_next_move_dir_ = SNAKE_DEFAULT_MOVE_DIR
 
 # Calculate the next coordinate by current coordinate and direction
 func calc_next_coord(coord: Vector2i) -> Vector2i:
