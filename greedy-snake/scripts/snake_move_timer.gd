@@ -1,5 +1,6 @@
 extends Timer
 
+#region public methods
 func exit_state(state: Configs.GameState) -> void:
     match state:
         Configs.GameState.IDLE:
@@ -29,3 +30,5 @@ func enter_state(state: Configs.GameState) -> void:
             self.start()
         _:
             pass
+
+#endregion

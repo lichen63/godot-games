@@ -4,6 +4,7 @@ enum MapCellState {BLANK, WALL, SNAKE, FOOD}
 
 var cell_data_: Array = []
 
+#region public methods
 # Calculate the position from coordinate
 func calc_pos_from_coord(coord: Vector2i) -> Vector2:
     var pos_x: float = Configs.MAP_CELL_WIDTH * coord.x
@@ -64,3 +65,5 @@ func update_coord_state(coord: Vector2i, state: MapCellState) -> void:
     if not check_coord_in_range(coord):
         return
     cell_data_[coord.x][coord.y] = state
+
+#endregion

@@ -1,6 +1,6 @@
 extends ColorRect
 
-
+#region public methods
 func exit_state(state: Configs.GameState) -> void:
     match state:
         Configs.GameState.IDLE:
@@ -35,5 +35,10 @@ func enter_state(state: Configs.GameState) -> void:
         _:
             pass
 
+#endregion
+
+#region signal methods
 func _on_start_button_button_down() -> void:
     self.get_parent().update_game_state(Configs.GameState.PLAYING)
+
+#endregion

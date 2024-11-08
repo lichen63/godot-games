@@ -1,6 +1,6 @@
 extends Node2D
 
-
+#region public methods
 func exit_state(state: Configs.GameState) -> void:
     match state:
         Configs.GameState.IDLE:
@@ -8,9 +8,9 @@ func exit_state(state: Configs.GameState) -> void:
         Configs.GameState.PLAYING:
             pass
         Configs.GameState.SUCCESS:
-            pass
+            self.refresh_position()
         Configs.GameState.FAILURE:
-            pass
+            self.refresh_position()
         Configs.GameState.PAUSED:
             pass
         _:
@@ -19,15 +19,13 @@ func exit_state(state: Configs.GameState) -> void:
 func enter_state(state: Configs.GameState) -> void:
     match state:
         Configs.GameState.IDLE:
-            refresh_position()
+            self.refresh_position()
             self.hide()
         Configs.GameState.PLAYING:
             self.show()
         Configs.GameState.SUCCESS:
-            refresh_position()
             self.hide()
         Configs.GameState.FAILURE:
-            refresh_position()
             self.hide()
         Configs.GameState.PAUSED:
             self.hide()
@@ -50,3 +48,9 @@ func refresh_position() -> void:
     self.position = MapController.calc_pos_from_coord(next_coord)
     MapController.update_coord_state(cur_coord, MapController.MapCellState.BLANK)
     MapController.update_coord_state(next_coord, MapController.MapCellState.FOOD)
+
+#endregion
+
+#region private methods
+
+#endregion
