@@ -160,7 +160,7 @@ func _on_snake_move_timer_timeout() -> void:
         self.snake_cur_move_dir_ = self.snake_next_move_dir_
     var cur_coord: Vector2i = MapController.calc_coord_from_pos(self.snake_head_.position)
     var next_coord: Vector2i = self._calc_next_coord(cur_coord)
-    self.emit_signal("on_snake_moving_to_coord", next_coord)
+    on_snake_moving_to_coord.emit(next_coord)
     self._move_snake_node(next_coord, MapController.check_coord_has_food(next_coord))
-    self.emit_signal("on_snake_moved_to_coord", next_coord)
+    on_snake_moved_to_coord.emit(next_coord)
 #endregion
