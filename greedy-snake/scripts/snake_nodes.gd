@@ -3,6 +3,7 @@ extends Node2D
 #region public signals
 signal on_snake_moving_to_coord(Vector2i)
 signal on_snake_moved_to_coord(Vector2i)
+signal on_snake_body_length_changed(int)
 #endregion
 
 #region export vars
@@ -85,6 +86,7 @@ func _add_new_body(coord: Vector2i) -> void:
     self.add_child(snake_body)
     self.snake_bodies_.push_front(snake_body)
     MapController.update_coord_state(coord, MapController.MapCellState.SNAKE)
+    on_snake_body_length_changed.emit(self.snake_bodies_.size())
 
 func _move_body_node(next_coord: Vector2i) -> void:
     var tail_node: Node2D = self.snake_bodies_.pop_back()

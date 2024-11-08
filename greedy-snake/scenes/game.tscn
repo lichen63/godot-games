@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkm0o4fs51xco"]
+[gd_scene load_steps=10 format=3 uid="uid://bkm0o4fs51xco"]
 
 [ext_resource type="PackedScene" uid="uid://dp4gc8qwkfx0l" path="res://scenes/snake_head.tscn" id="1_6nvoh"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_15alt"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/snake_nodes.gd" id="5_bqaf8"]
 [ext_resource type="Script" path="res://scripts/result_panel.gd" id="6_7p3vl"]
 [ext_resource type="Script" path="res://scripts/snake_move_timer.gd" id="6_lsv3p"]
+[ext_resource type="Script" path="res://scripts/score_label.gd" id="8_rdojw"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4xkwc"]
 font_size = 100
@@ -69,6 +70,7 @@ snake_head_scene_ = ExtResource("1_6nvoh")
 snake_body_scene_ = ExtResource("3_utqtl")
 
 [node name="ResultPanel" type="ColorRect" parent="."]
+visible = false
 z_index = 1
 offset_right = 1200.0
 offset_bottom = 600.0
@@ -113,6 +115,17 @@ text = "Start"
 wait_time = 0.3
 script = ExtResource("6_lsv3p")
 
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 30.0
+offset_top = 30.0
+offset_right = 170.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "Score"
+script = ExtResource("8_rdojw")
+
+[connection signal="on_snake_body_length_changed" from="SnakeNodes" to="ScoreLabel" method="_on_snake_nodes_on_snake_body_length_changed"]
 [connection signal="on_snake_moved_to_coord" from="SnakeNodes" to="SnakeFood" method="_on_snake_nodes_on_snake_movd_to_coord"]
 [connection signal="on_snake_moving_to_coord" from="SnakeNodes" to="." method="_on_snake_nodes_on_snake_moving_to_coord"]
 [connection signal="button_down" from="ResultPanel/StartButton" to="ResultPanel" method="_on_start_button_button_down"]
