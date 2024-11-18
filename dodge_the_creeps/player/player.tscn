@@ -1,11 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://cu80wsphkugn8"]
+[gd_scene load_steps=8 format=3 uid="uid://cu80wsphkugn8"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_af8vp"]
 [ext_resource type="Texture2D" uid="uid://bdu2rxjc7ttlu" path="res://assets/img/playerGrey_walk1.png" id="1_nkdof"]
 [ext_resource type="Texture2D" uid="uid://cbt8hmukgxo70" path="res://assets/img/playerGrey_walk2.png" id="2_8hh1p"]
+[ext_resource type="Texture2D" uid="uid://c038fbpxf8jug" path="res://assets/img/playerGrey_up1.png" id="2_26i61"]
+[ext_resource type="Texture2D" uid="uid://brbtlx66hpfl5" path="res://assets/img/playerGrey_up2.png" id="3_hm7iq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mtosk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_26i61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hm7iq")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_8hh1p")
@@ -27,6 +40,17 @@ animations = [{
 "loop": true,
 "name": &"right",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_26i61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hm7iq")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fhpq2"]
@@ -39,10 +63,7 @@ script = ExtResource("1_af8vp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 sprite_frames = SubResource("SpriteFrames_mtosk")
-animation = &"left"
-frame = 1
-frame_progress = 0.0241698
-flip_h = true
+animation = &"right"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-0.5, -1.5)
