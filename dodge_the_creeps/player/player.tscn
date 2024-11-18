@@ -10,35 +10,13 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_26i61")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_hm7iq")
-}],
-"loop": true,
-"name": &"down",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_8hh1p")
-}, {
-"duration": 1.0,
-"texture": ExtResource("1_nkdof")
-}],
-"loop": true,
-"name": &"left",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("1_nkdof")
 }, {
 "duration": 1.0,
 "texture": ExtResource("2_8hh1p")
 }],
 "loop": true,
-"name": &"right",
+"name": &"right_or_left",
 "speed": 5.0
 }, {
 "frames": [{
@@ -49,7 +27,7 @@ animations = [{
 "texture": ExtResource("3_hm7iq")
 }],
 "loop": true,
-"name": &"up",
+"name": &"up_or_down",
 "speed": 5.0
 }]
 
@@ -63,7 +41,7 @@ script = ExtResource("1_af8vp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 sprite_frames = SubResource("SpriteFrames_mtosk")
-animation = &"right"
+animation = &"right_or_left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-0.5, -1.5)
