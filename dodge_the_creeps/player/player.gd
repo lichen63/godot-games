@@ -13,10 +13,6 @@ const PLAYER_MOVE_SPEED: int = 200
 
 @onready var animated_sprite_: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-    pass # Replace with function body.
-
 func _physics_process(delta: float) -> void:
     var direction: Vector2 = Vector2(
         Input.get_action_strength(PLAYER_ACTION_RIGHT) - Input.get_action_strength(PLAYER_ACTION_LEFT),
@@ -29,7 +25,6 @@ func _physics_process(delta: float) -> void:
     update_animation(direction)
 
 func clamp_to_screen(pos: Vector2) -> Vector2:
-    # 获取当前窗口大小
     var viewport_rect = get_viewport().get_visible_rect()
     return Vector2(
         clamp(pos.x, viewport_rect.position.x, viewport_rect.position.x + viewport_rect.size.x),
