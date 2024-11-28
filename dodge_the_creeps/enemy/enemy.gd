@@ -7,7 +7,7 @@ enum EdgeDir {
     RIGHT
 }
 
-const SPEED: int = 10
+const SPEED: int = 6
 
 @onready var screen_size_: Vector2 = get_viewport().get_visible_rect().size
 
@@ -21,15 +21,6 @@ func _ready():
     curve_node.clear_points()
     curve_node.add_point(Vector2.ZERO)
     curve_node.add_point(end_pos - start_pos)
-
-    var follow_node: PathFollow2D = $Path2D/PathFollow2D
-    follow_node.loop = false
-
-    # 打印日志
-    print("start_pos: ", start_pos)
-    print("end_pos: ", end_pos)
-    for i in range(curve_node.get_point_count()):
-        print("curve_node point ", i, ": ", curve_node.get_point_position(i))
 
 func _physics_process(delta: float) -> void:
     var follow_node = $Path2D/PathFollow2D
