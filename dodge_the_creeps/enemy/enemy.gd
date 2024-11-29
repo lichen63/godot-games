@@ -8,8 +8,13 @@ enum EdgeDir {
 }
 
 const SPEED: int = 6
+const ANIMATION_PREFIX: String = "action_"
 
 @onready var screen_size_: Vector2 = get_viewport().get_visible_rect().size
+@onready var animated_sprite_: AnimatedSprite2D = $Area2D/AnimatedSprite2D
+@onready var path_: Path2D = $Path2D
+@onready var path_follow_: PathFollow2D = $Path2D/PathFollow2D
+@onready var visible_on_screen_notifier_: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 func _ready():
     randomize()
@@ -17,16 +22,19 @@ func _ready():
     var start_pos: Vector2 = get_random_pos_on_edge(start_edge)
     var end_pos: Vector2 = get_random_pos_on_edge(get_opposite_edge(start_edge))
     self.position = start_pos
-    var curve_node: Curve2D = $Path2D.curve
+    var curve_node: Curve2D = path_.curve
     curve_node.clear_points()
     curve_node.add_point(Vector2.ZERO)
     curve_node.add_point(end_pos - start_pos)
+    animated_sprite_.animation = ANIMATION_PREFIX + str(randi() % 3 + 1)
+    animated_sprite_.play()
+    var direction: Vector2 = (end_pos - start_pos).normalized()
+    animated_sprite_.rotation = direction.angle()
 
 func _physics_process(delta: float) -> void:
-    var follow_node = $Path2D/PathFollow2D
-    follow_node.progress += SPEED * delta
-    self.position = follow_node.global_position
-    if not $VisibleOnScreenNotifier2D.is_on_screen():
+    path_follow_.progress += SPEED * delta
+    self.position = path_follow_.global_position
+    if not visible_on_screen_notifier_.is_on_screen():
         queue_free()
 
 func get_random_pos_on_edge(edge_dir: EdgeDir) -> Vector2:
