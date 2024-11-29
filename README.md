@@ -7,6 +7,7 @@ I make these games partly for practice and partly for testing the functions.
 ## Game lists
 
 - Greedy Snake
+- Dodge the Creeps
 
 ## Sources of game assets
 
