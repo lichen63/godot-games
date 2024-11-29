@@ -24,6 +24,12 @@ func _physics_process(delta: float) -> void:
         self.position = clamp_to_screen(new_position)
     update_animation(direction)
 
+func _on_area_2d_area_entered(area: Area2D) -> void:
+    if not area.get_parent().is_in_group("enemies"):
+        return
+    print("Game Over!")
+    relead_scene.call_deferred()
+
 func clamp_to_screen(pos: Vector2) -> Vector2:
     var viewport_rect = get_viewport().get_visible_rect()
     return Vector2(
@@ -48,3 +54,6 @@ func update_animation(direction: Vector2) -> void:
     animated_sprite_.flip_h = flip_h
     animated_sprite_.flip_v = flip_v
     animated_sprite_.play()
+
+func relead_scene() -> void:
+    get_tree().reload_current_scene()

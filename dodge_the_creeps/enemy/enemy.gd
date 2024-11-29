@@ -17,7 +17,6 @@ const ANIMATION_PREFIX: String = "action_"
 @onready var visible_on_screen_notifier_: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 func _ready():
-    randomize()
     var start_edge: EdgeDir = EdgeDir.values()[randi() % EdgeDir.size()]
     var start_pos: Vector2 = get_random_pos_on_edge(start_edge)
     var end_pos: Vector2 = get_random_pos_on_edge(get_opposite_edge(start_edge))

@@ -50,10 +50,11 @@ size = Vector2(107, 96)
 [sub_resource type="Curve2D" id="Curve2D_htjsx"]
 resource_local_to_scene = true
 
-[node name="Enemy" type="Node2D"]
+[node name="Enemy" type="Node2D" groups=["enemies"]]
 script = ExtResource("1_bbb3q")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 sprite_frames = SubResource("SpriteFrames_5oo5i")

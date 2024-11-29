@@ -38,6 +38,7 @@ size = Vector2(107, 125)
 script = ExtResource("1_af8vp")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 sprite_frames = SubResource("SpriteFrames_mtosk")
@@ -46,3 +47,5 @@ animation = &"right_or_left"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-0.5, -1.5)
 shape = SubResource("RectangleShape2D_fhpq2")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
