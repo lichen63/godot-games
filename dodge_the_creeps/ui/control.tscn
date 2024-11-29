@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://c01xmvgbgrhbw"]
+
+[ext_resource type="FontFile" uid="uid://c2mhiakww3nle" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_ae7jf"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 900.0
+offset_bottom = 2000.0
+color = Color(0.423651, 0.423651, 0.423651, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 318.0
+offset_right = 593.0
+offset_bottom = 109.0
+theme_override_fonts/font = ExtResource("1_ae7jf")
+theme_override_font_sizes/font_size = 90
+text = "Score"
