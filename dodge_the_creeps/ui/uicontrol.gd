@@ -1,12 +1,30 @@
 extends Control
 
+signal game_started
+
 const SCORE_PREFIX: String = "Score: "
 
-@onready var label_: Label = $Label
+@onready var score_label_: Label = $ScoreLabel
+@onready var start_button_: Button = $StartButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     pass # Replace with function body.
 
 func update_score(score: int) -> void:
-    label_.text = SCORE_PREFIX + str(score)
+    score_label_.text = SCORE_PREFIX + str(score)
+
+func update_game_state(game_state: Configs.GameState) -> void:
+    match game_state:
+        Configs.GameState.IDLE:
+            score_label_.visible = true
+            start_button_.visible = true
+        Configs.GameState.PLAYING:
+            score_label_.visible = true
+            start_button_.visible = false
+        Configs.GameState.GAME_OVER:
+            score_label_.visible = true
+            start_button_.visible = true
+
+func _on_start_button_button_down() -> void:
+    game_started.emit()

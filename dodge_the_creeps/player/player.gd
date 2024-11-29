@@ -1,5 +1,7 @@
 extends Node2D
 
+signal player_died
+
 #region Player constants
 const PLAYER_ACTION_LEFT: String = "player_action_left"
 const PLAYER_ACTION_RIGHT: String = "player_action_right"
@@ -27,8 +29,7 @@ func _physics_process(delta: float) -> void:
 func _on_area_2d_area_entered(area: Area2D) -> void:
     if not area.get_parent().is_in_group("enemies"):
         return
-    print("Game Over!")
-    relead_scene.call_deferred()
+    player_died.emit()
 
 func clamp_to_screen(pos: Vector2) -> Vector2:
     var viewport_rect = get_viewport().get_visible_rect()
@@ -54,6 +55,3 @@ func update_animation(direction: Vector2) -> void:
     animated_sprite_.flip_h = flip_h
     animated_sprite_.flip_v = flip_v
     animated_sprite_.play()
-
-func relead_scene() -> void:
-    get_tree().reload_current_scene()

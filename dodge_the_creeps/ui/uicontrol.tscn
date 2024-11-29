@@ -15,7 +15,7 @@ offset_right = 900.0
 offset_bottom = 2000.0
 color = Color(0.423651, 0.423651, 0.423651, 1)
 
-[node name="Label" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="."]
 layout_mode = 0
 offset_right = 900.0
 offset_bottom = 150.0
@@ -24,3 +24,19 @@ theme_override_font_sizes/font_size = 90
 text = "Score: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 300.0
+offset_top = 1300.0
+offset_right = 600.0
+offset_bottom = 1400.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_ae7jf")
+theme_override_font_sizes/font_size = 76
+text = "Start"
+
+[connection signal="button_down" from="StartButton" to="." method="_on_start_button_button_down"]
