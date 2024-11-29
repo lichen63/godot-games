@@ -8,3 +8,7 @@ script = ExtResource("1_xhws6")
 
 [node name="Player" parent="." instance=ExtResource("1_d4kni")]
 position = Vector2(450, 1000)
+
+[node name="SpawnEnemyTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="SpawnEnemyTimer" to="." method="_on_spawn_enemy_timer_timeout"]

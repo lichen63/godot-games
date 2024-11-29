@@ -1,14 +1,11 @@
 extends Node2D
 
 var enemy_scene_: PackedScene = preload("res://enemy/enemy.tscn")
-var spawn_enemy_interval_ = 1
+
+@onready var spawn_enemy_timer_: Timer = $SpawnEnemyTimer
 
 func _ready():
-    var timer = Timer.new()
-    timer.wait_time = spawn_enemy_interval_
-    timer.autostart = true
-    timer.timeout.connect(_spawn_enemy)
-    add_child(timer)
+    spawn_enemy_timer_.start()
 
-func _spawn_enemy():
+func _on_spawn_enemy_timer_timeout() -> void:
     add_child(enemy_scene_.instantiate())
