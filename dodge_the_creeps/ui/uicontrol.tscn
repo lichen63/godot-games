@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c01xmvgbgrhbw"]
+[gd_scene load_steps=3 format=3 uid="uid://c01xmvgbgrhbw"]
 
 [ext_resource type="FontFile" uid="uid://c2mhiakww3nle" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_ae7jf"]
+[ext_resource type="Script" path="res://ui/uicontrol.gd" id="1_t1t43"]
 
-[node name="Control" type="Control"]
+[node name="UIControl" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_t1t43")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false
@@ -15,9 +17,10 @@ color = Color(0.423651, 0.423651, 0.423651, 1)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 318.0
-offset_right = 593.0
-offset_bottom = 109.0
+offset_right = 900.0
+offset_bottom = 150.0
 theme_override_fonts/font = ExtResource("1_ae7jf")
 theme_override_font_sizes/font_size = 90
-text = "Score"
+text = "Score: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
