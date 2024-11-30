@@ -32,19 +32,20 @@ func _reload_current_scene() -> void:
     get_tree().reload_current_scene()
 
 func update_game_state(game_state: Configs.GameState) -> void:
-    if game_state_ == game_state:
-        return
     game_state_ = game_state
     match game_state:
         Configs.GameState.IDLE:
+            score_ = 0
             spawn_enemy_timer_.stop()
             score_timer_.stop()
-            score_ = 0
         Configs.GameState.PLAYING:
             spawn_enemy_timer_.start()
             score_timer_.start()
         Configs.GameState.GAME_OVER:
+            score_ = 0
             spawn_enemy_timer_.stop()
             score_timer_.stop()
-            call_deferred("_reload_current_scene")
+            get_tree().get_nodes_in_group("enemies").map(func(enemy): enemy.queue_free())
+            player_.reset_node()
+            ui_control_.update_score(score_)
     ui_control_.update_game_state(game_state)

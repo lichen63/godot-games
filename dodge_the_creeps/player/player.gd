@@ -9,6 +9,7 @@ const PLAYER_ACTION_UP: String = "player_action_up"
 const PLAYER_ACTION_DOWN: String = "player_action_down"
 const PLAYER_ANIMATION_RIGHT_OR_LEFT: String = "right_or_left"
 const PLAYER_ANIMATION_UP_OR_DOWN: String = "up_or_down"
+const PLAYER_INIT_POSITION: Vector2 = Vector2(450, 1000)
 #endregion
 
 const PLAYER_MOVE_SPEED: int = 200
@@ -55,3 +56,8 @@ func update_animation(direction: Vector2) -> void:
     animated_sprite_.flip_h = flip_h
     animated_sprite_.flip_v = flip_v
     animated_sprite_.play()
+
+func reset_node() -> void:
+    self.position = PLAYER_INIT_POSITION
+    animated_sprite_.stop()
+    animated_sprite_.animation = PLAYER_ANIMATION_RIGHT_OR_LEFT
