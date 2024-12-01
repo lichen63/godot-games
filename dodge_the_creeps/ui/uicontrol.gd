@@ -32,3 +32,8 @@ func update_game_state(game_state: Configs.GameState) -> void:
 
 func _on_start_button_button_down() -> void:
     game_started.emit()
+
+func update_max_score(max_score: int, is_new_max_score: bool) -> void:
+    game_over_label_.text = "Game Over!\nMax Score: " + str(max_score)
+    if is_new_max_score:
+        game_over_label_.text += "\nNew Max Score!"

@@ -1,8 +1,10 @@
 extends Node2D
 
 const ENEMY_SCENE: PackedScene = preload("res://enemy/enemy.tscn")
+const MAX_SCORE_KEY: String = "max_score"
 
 var score_: int = 0
+var max_score_: int = 0
 var game_state_: Configs.GameState = Configs.GameState.IDLE
 
 @onready var player_: Node2D = $Player
@@ -14,6 +16,8 @@ func _ready():
     player_.connect("player_died", Callable(self, "_on_player_died"))
     ui_control_.connect("game_started", Callable(self, "_on_game_started"))
     update_game_state(game_state_)
+    var max_score_from_local_data = LocalData.read_from_local_data(MAX_SCORE_KEY)
+    max_score_ = max_score_from_local_data if max_score_from_local_data != null else 0
 
 func _on_spawn_enemy_timer_timeout() -> void:
     add_child(ENEMY_SCENE.instantiate())
@@ -36,13 +40,20 @@ func update_game_state(game_state: Configs.GameState) -> void:
     match game_state:
         Configs.GameState.IDLE:
             score_ = 0
+            player_.visible = true
             spawn_enemy_timer_.stop()
             score_timer_.stop()
         Configs.GameState.PLAYING:
+            player_.visible = true
             spawn_enemy_timer_.start()
             score_timer_.start()
         Configs.GameState.GAME_OVER:
+            var is_new_max_score: bool = score_ > max_score_
+            max_score_ = max(score_, max_score_)
+            ui_control_.update_max_score(max_score_, is_new_max_score)
+            LocalData.write_to_local_data(MAX_SCORE_KEY, max_score_)
             score_ = 0
+            player_.visible = false
             spawn_enemy_timer_.stop()
             score_timer_.stop()
             get_tree().get_nodes_in_group("enemies").map(func(enemy): enemy.queue_free())
