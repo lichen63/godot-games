@@ -1,6 +1,8 @@
 extends Node2D
 
 const ENEMY_SCENE: PackedScene = preload("res://enemy/enemy.tscn")
+const AUDIO_BACKGROUND: AudioStream = preload("res://assets/audio/background.ogg")
+const AUDIO_GAMEOVER: AudioStream = preload("res://assets/audio/gameover.wav")
 const MAX_SCORE_KEY: String = "max_score"
 
 var score_: int = 0
@@ -11,6 +13,7 @@ var game_state_: Configs.GameState = Configs.GameState.IDLE
 @onready var spawn_enemy_timer_: Timer = $SpawnEnemyTimer
 @onready var score_timer_: Timer = $ScoreTimer
 @onready var ui_control_: Control = $UIControl
+@onready var audio_stream_player_: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func _ready():
     player_.connect("player_died", Callable(self, "_on_player_died"))
@@ -60,3 +63,12 @@ func update_game_state(game_state: Configs.GameState) -> void:
             player_.reset_node()
             ui_control_.update_score(score_)
     ui_control_.update_game_state(game_state)
+    update_audio_stream()
+
+func update_audio_stream() -> void:
+    var cur_stream: AudioStream = audio_stream_player_.stream
+    var new_stream: AudioStream = AUDIO_GAMEOVER if game_state_ == Configs.GameState.GAME_OVER else AUDIO_BACKGROUND
+    if cur_stream == new_stream:
+        return
+    audio_stream_player_.stream = new_stream
+    audio_stream_player_.play()
