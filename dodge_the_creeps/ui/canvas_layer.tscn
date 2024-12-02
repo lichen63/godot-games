@@ -1,22 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://c01xmvgbgrhbw"]
 
 [ext_resource type="FontFile" uid="uid://c2mhiakww3nle" path="res://assets/fonts/Xolonium-Regular.ttf" id="1_ae7jf"]
-[ext_resource type="Script" path="res://ui/uicontrol.gd" id="1_t1t43"]
+[ext_resource type="Script" path="res://ui/canvas_layer.gd" id="1_t1t43"]
 
-[node name="UIControl" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_t1t43")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 visible = false
-layout_mode = 1
 offset_right = 900.0
 offset_bottom = 2000.0
 color = Color(0.423651, 0.423651, 0.423651, 1)
 
 [node name="ScoreLabel" type="Label" parent="."]
-layout_mode = 0
 offset_right = 900.0
 offset_bottom = 150.0
 theme_override_fonts/font = ExtResource("1_ae7jf")
@@ -26,13 +22,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="StartButton" type="Button" parent="."]
-layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 300.0
+offset_left = -150.0
 offset_top = 1300.0
-offset_right = 600.0
+offset_right = 150.0
 offset_bottom = 1400.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("1_ae7jf")
@@ -40,7 +35,6 @@ theme_override_font_sizes/font_size = 76
 text = "Start"
 
 [node name="GameOverLabel" type="Label" parent="."]
-layout_mode = 0
 offset_top = 700.0
 offset_right = 900.0
 offset_bottom = 1000.0

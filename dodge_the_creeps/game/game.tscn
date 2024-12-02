@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cu80wsphkugn8" path="res://player/player.tscn" id="1_d4kni"]
 [ext_resource type="Script" path="res://game/game.gd" id="1_xhws6"]
-[ext_resource type="PackedScene" uid="uid://c01xmvgbgrhbw" path="res://ui/uicontrol.tscn" id="3_gterc"]
+[ext_resource type="PackedScene" uid="uid://c01xmvgbgrhbw" path="res://ui/canvas_layer.tscn" id="3_gterc"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_xhws6")
@@ -13,7 +13,7 @@ position = Vector2(450, 1000)
 
 [node name="SpawnEnemyTimer" type="Timer" parent="."]
 
-[node name="UIControl" parent="." instance=ExtResource("3_gterc")]
+[node name="CanvasLayer" parent="." instance=ExtResource("3_gterc")]
 metadata/_edit_group_ = true
 
 [node name="ScoreTimer" type="Timer" parent="."]

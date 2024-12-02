@@ -12,12 +12,12 @@ var game_state_: Configs.GameState = Configs.GameState.IDLE
 @onready var player_: Node2D = $Player
 @onready var spawn_enemy_timer_: Timer = $SpawnEnemyTimer
 @onready var score_timer_: Timer = $ScoreTimer
-@onready var ui_control_: Control = $UIControl
+@onready var canvas_layer_: CanvasLayer = $CanvasLayer
 @onready var audio_stream_player_: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 func _ready():
     player_.connect("player_died", Callable(self, "_on_player_died"))
-    ui_control_.connect("game_started", Callable(self, "_on_game_started"))
+    canvas_layer_.connect("game_started", Callable(self, "_on_game_started"))
     update_game_state(game_state_)
     var max_score_from_local_data = LocalData.read_from_local_data(MAX_SCORE_KEY)
     max_score_ = max_score_from_local_data if max_score_from_local_data != null else 0
@@ -27,7 +27,7 @@ func _on_spawn_enemy_timer_timeout() -> void:
 
 func _on_score_timer_timeout() -> void:
     score_ += 1
-    ui_control_.update_score(score_)
+    canvas_layer_.update_score(score_)
 
 func _on_player_died() -> void:
     update_game_state(Configs.GameState.GAME_OVER)
@@ -53,7 +53,7 @@ func update_game_state(game_state: Configs.GameState) -> void:
         Configs.GameState.GAME_OVER:
             var is_new_max_score: bool = score_ > max_score_
             max_score_ = max(score_, max_score_)
-            ui_control_.update_max_score(max_score_, is_new_max_score)
+            canvas_layer_.update_max_score(max_score_, is_new_max_score)
             LocalData.write_to_local_data(MAX_SCORE_KEY, max_score_)
             score_ = 0
             player_.visible = false
@@ -61,8 +61,8 @@ func update_game_state(game_state: Configs.GameState) -> void:
             score_timer_.stop()
             get_tree().get_nodes_in_group("enemies").map(func(enemy): enemy.queue_free())
             player_.reset_node()
-            ui_control_.update_score(score_)
-    ui_control_.update_game_state(game_state)
+            canvas_layer_.update_score(score_)
+    canvas_layer_.update_game_state(game_state)
     update_audio_stream()
 
 func update_audio_stream() -> void:
