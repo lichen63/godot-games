@@ -28,14 +28,14 @@ func _on_spawn_enemy_timer_timeout() -> void:
     # Choose a random location on Path2D.
     enemy_spawn_location_.progress_ratio = randf()
     # Set the direction perpendicular to the path direction.
-    var enemy_direction = enemy_spawn_location_.rotation + PI / 2
+    var enemy_direction: float = enemy_spawn_location_.rotation + PI / 2
     # Set the position to a random location.
     enemy_node.position = enemy_spawn_location_.position
     # Add some randomness to the direction.
     enemy_direction += randf_range(-PI / 4, PI / 4)
     enemy_node.rotation = enemy_direction
     # Choose the velocity for the enemy.
-    var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+    var velocity: Vector2 = Vector2(randf_range(150.0, 250.0), 0.0)
     enemy_node.linear_velocity = velocity.rotated(enemy_direction)
     add_child(enemy_node)
 
