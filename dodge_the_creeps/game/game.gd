@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 const ENEMY_SCENE: PackedScene = preload("res://enemy/enemy.tscn")
 const AUDIO_BACKGROUND: AudioStream = preload("res://assets/audio/background.ogg")
