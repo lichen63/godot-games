@@ -12,7 +12,7 @@ const PLAYER_ANIMATION_UP_OR_DOWN: String = "up_or_down"
 const PLAYER_INIT_POSITION: Vector2 = Vector2(450, 1000)
 #endregion
 
-const PLAYER_MOVE_SPEED: int = 200
+const PLAYER_MOVE_SPEED: int = 300
 
 @onready var animated_sprite_: AnimatedSprite2D = $Area2D/AnimatedSprite2D
 
@@ -27,8 +27,8 @@ func _physics_process(delta: float) -> void:
         self.position = clamp_to_screen(new_position)
     update_animation(direction)
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
-    if not area.get_parent().is_in_group("enemies"):
+func _on_area_2d_body_entered(body: Node2D) -> void:
+    if not body.is_in_group("enemies"):
         return
     player_died.emit()
 

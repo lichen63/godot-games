@@ -14,6 +14,7 @@ var game_state_: Configs.GameState = Configs.GameState.IDLE
 @onready var score_timer_: Timer = $ScoreTimer
 @onready var canvas_layer_: CanvasLayer = $CanvasLayer
 @onready var audio_stream_player_: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var enemy_spawn_location_: PathFollow2D = $EnemyPath/EnemySpawnLocation
 
 func _ready():
     player_.connect("player_died", Callable(self, "_on_player_died"))
@@ -23,7 +24,20 @@ func _ready():
     max_score_ = max_score_from_local_data if max_score_from_local_data != null else 0
 
 func _on_spawn_enemy_timer_timeout() -> void:
-    add_child(ENEMY_SCENE.instantiate())
+    var enemy_node: RigidBody2D = ENEMY_SCENE.instantiate()
+    # Choose a random location on Path2D.
+    enemy_spawn_location_.progress_ratio = randf()
+    # Set the direction perpendicular to the path direction.
+    var enemy_direction = enemy_spawn_location_.rotation + PI / 2
+    # Set the position to a random location.
+    enemy_node.position = enemy_spawn_location_.position
+    # Add some randomness to the direction.
+    enemy_direction += randf_range(-PI / 4, PI / 4)
+    enemy_node.rotation = enemy_direction
+    # Choose the velocity for the enemy.
+    var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
+    enemy_node.linear_velocity = velocity.rotated(enemy_direction)
+    add_child(enemy_node)
 
 func _on_score_timer_timeout() -> void:
     score_ += 1
