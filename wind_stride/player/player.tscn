@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://wa8ln3c6faqa"]
+
+[ext_resource type="Texture2D" uid="uid://bei48rq6tooi7" path="res://assets/images/player/player-stand-1.png" id="1_8n3ef"]
+[ext_resource type="Texture2D" uid="uid://bgfixedfy52xa" path="res://assets/images/player/player-stand-2.png" id="2_2ye31"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_30qbx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8n3ef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_2ye31")
+}],
+"loop": true,
+"name": &"stand-1",
+"speed": 2.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_30qbx")
+animation = &"stand-1"
+frame_progress = 0.082946
