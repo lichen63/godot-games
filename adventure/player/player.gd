@@ -6,6 +6,7 @@ enum State {
     JUMP,
     FALL,
     LANDING,
+    WALL_SLIDING,
 }
 
 const RUN_SPEED: float = 160.0
@@ -17,10 +18,12 @@ const GROUND_STATES: Array = [State.IDLE, State.RUNNING, State.LANDING]
 var default_gravity_: float = ProjectSettings.get("physics/2d/default_gravity")
 var is_first_tick_: bool = false
 
-@onready var sprite_: Sprite2D = $Sprite
+@onready var graphics_: Node2D = $Graphics
 @onready var animation_player_: AnimationPlayer = $AnimationPlayer
 @onready var coyote_timer_: Timer = $CoyoteTimer
 @onready var jump_request_timer_: Timer = $JumpRequestTimer
+@onready var hand_checker_: RayCast2D = $Graphics/HandChecker
+@onready var foot_checker_: RayCast2D = $Graphics/FootChecker
 
 func tick_physics(state: State, delta: float) -> void:
     match state:
@@ -34,6 +37,9 @@ func tick_physics(state: State, delta: float) -> void:
             move(self.default_gravity_, delta)
         State.LANDING:
             stand(delta)
+        State.WALL_SLIDING:
+            move(self.default_gravity_ / 3, delta)
+            self.graphics_.scale.x = self.get_wall_normal().x
     self.is_first_tick_ = false
 
 func move(gravity: float, delta: float) -> void:
@@ -43,7 +49,7 @@ func move(gravity: float, delta: float) -> void:
     self.velocity.y += gravity * delta
 
     if not is_zero_approx(direction):
-        sprite_.flip_h = direction < 0
+        self.graphics_.scale.x = +1 if direction < 0 else -1
     self.move_and_slide()
 
 func stand(delta: float) -> void:
@@ -84,9 +90,18 @@ func get_next_state(state: State) -> State:
         State.FALL:
             if self.is_on_floor():
                 return State.LANDING if is_still else State.RUNNING
+            if self.is_on_wall() and self.hand_checker_.is_colliding() and self.foot_checker_.is_colliding():
+                return State.WALL_SLIDING
         State.LANDING:
+            if not is_still:
+                return State.RUNNING
             if not self.animation_player_.is_playing():
                 return State.IDLE
+        State.WALL_SLIDING:
+            if self.is_on_floor():
+                return State.IDLE
+            if not self.is_on_wall():
+                return State.FALL
     return state
 
 func transition_state(from: State, to: State) -> void:
@@ -108,4 +123,6 @@ func transition_state(from: State, to: State) -> void:
                 self.coyote_timer_.start()
         State.LANDING:
             self.animation_player_.play("landing")
+        State.WALL_SLIDING:
+            self.animation_player_.play("wall_sliding")
     self.is_first_tick_ = true
