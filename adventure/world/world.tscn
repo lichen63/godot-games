@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://dur5oxkruwssa"]
+[gd_scene load_steps=14 format=4 uid="uid://dur5oxkruwssa"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_4juco"]
 [ext_resource type="Texture2D" uid="uid://wb2lq8nkoi4l" path="res://assets/images/tree-assets.png" id="1_o8p3r"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c35iw7xnb557w" path="res://assets/images/background.png" id="4_y3xna"]
 [ext_resource type="Texture2D" uid="uid://r05cdnftxig1" path="res://assets/images/background-hills.png" id="5_bqxb6"]
 [ext_resource type="Texture2D" uid="uid://bmjeufy5q2ldq" path="res://assets/images/background-trees.png" id="6_5nsx8"]
+[ext_resource type="PackedScene" uid="uid://ogy6gp25hym5" path="res://enemy/boar.tscn" id="7_06eqx"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kuu3j"]
 texture = ExtResource("1_o8p3r")
@@ -381,11 +382,11 @@ tile_map_data = PackedByteArray("AAACAA0AAAAGAAAAAAACAAwAAAAFAAIAAAACAAsAAAAEAAM
 tile_set = SubResource("TileSet_mifxu")
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAGAAsAAAAHAAMAAAAJAAsAAAAKAAIAAAANAAsAAAAIAAIAAAAUAAgAAAAJAAIAAAAdAAgAAAAGAAMAAAAeAAgAAAAJAAIAAAAIAAEAAAAJAAIAAAAlAAsAAAAGAAMAAAAnAAsAAAAJAAMAAAAoAAsAAAAJAAIAAAApAAsAAAAKAAIAAAAvAAsAAAAJAAMAAAA2AAkAAAAIAAIAAAA3AAkAAAAIAAMAAAA5AAkAAAAJAAMAAAA8AAkAAAAKAAIAAAAnAPf/AAAIAAMAAAAsAPf/AAAIAAMAAAAKAPn/AAAJAAMAAAARAPn/AAAJAAMAAAADAPz/AAAJAAMAAAAEAPz/AAAIAAIAAAAiAAQAAAAKAAIAAAAkAAQAAAAIAAMAAAAqAAEAAAAIAAIAAAAtAAEAAAAGAAMAAAAxAP7/AAAJAAMAAAA=")
+tile_map_data = PackedByteArray("AAAGAAsAAAAHAAMAAAAJAAsAAAAKAAIAAAANAAsAAAAIAAIAAAAUAAgAAAAJAAIAAAAdAAgAAAAGAAMAAAAeAAgAAAAJAAIAAAAIAAEAAAAJAAIAAAAlAAsAAAAGAAMAAAAnAAsAAAAJAAMAAAAoAAsAAAAJAAIAAAApAAsAAAAKAAIAAAAvAAsAAAAJAAMAAAA2AAkAAAAIAAIAAAA3AAkAAAAIAAMAAAA5AAkAAAAJAAMAAAA8AAkAAAAKAAIAAAAnAPf/AAAIAAMAAAAsAPf/AAAIAAMAAAAKAPn/AAAJAAMAAAARAPn/AAAJAAMAAAADAPz/AAAJAAMAAAAEAPz/AAAIAAIAAAAqAAEAAAAIAAIAAAAtAAEAAAAGAAMAAAAxAP7/AAAJAAMAAAA=")
 tile_set = SubResource("TileSet_6xilp")
 
 [node name="Player" parent="." instance=ExtResource("2_c0b28")]
-position = Vector2(462, 123)
+position = Vector2(580, 94)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -15)
@@ -646,14 +647,5 @@ texture = ExtResource("1_o8p3r")
 region_enabled = true
 region_rect = Rect2(210, 197, 124, 86)
 
-[node name="Foreground20" type="Sprite2D" parent="Decorations/Foreground/Bushes"]
-position = Vector2(745, 53)
-texture = ExtResource("1_o8p3r")
-region_enabled = true
-region_rect = Rect2(210, 197, 124, 86)
-
-[node name="Foreground21" type="Sprite2D" parent="Decorations/Foreground/Bushes"]
-position = Vector2(860, 192)
-texture = ExtResource("1_o8p3r")
-region_enabled = true
-region_rect = Rect2(210, 197, 124, 86)
+[node name="Boar" parent="." instance=ExtResource("7_06eqx")]
+position = Vector2(706, 30)

@@ -124,6 +124,11 @@ func get_next_state(state: State) -> State:
     return state
 
 func transition_state(from: State, to: State) -> void:
+    #print("[%s] %s => %s" % [
+        #Engine.get_physics_frames(),
+        #State.keys()[from] if from != -1 else "<Start>",
+        #State.keys()[to],
+    #])
     if from in GROUND_STATES and to in GROUND_STATES:
         self.coyote_timer_.stop()
     match to:
