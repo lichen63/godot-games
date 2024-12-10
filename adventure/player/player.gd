@@ -7,12 +7,14 @@ enum State {
     FALL,
     LANDING,
     WALL_SLIDING,
+    WALL_JUMP,
 }
 
 const RUN_SPEED: float = 160.0
 const ACCELERATION_FLOOR: float = RUN_SPEED / 0.2
-const ACCELERATION_AIR: float = RUN_SPEED / 0.02
+const ACCELERATION_AIR: float = RUN_SPEED / 0.1
 const JUMP_VELOCITY: float = -360.0
+const WALL_JUMP_VELOCITY: Vector2 = Vector2(400, -320.0)
 const GROUND_STATES: Array = [State.IDLE, State.RUNNING, State.LANDING]
 
 var default_gravity_: float = ProjectSettings.get("physics/2d/default_gravity")
@@ -24,22 +26,29 @@ var is_first_tick_: bool = false
 @onready var jump_request_timer_: Timer = $JumpRequestTimer
 @onready var hand_checker_: RayCast2D = $Graphics/HandChecker
 @onready var foot_checker_: RayCast2D = $Graphics/FootChecker
+@onready var state_machine_: StateMachine = $StateMachine
 
 func tick_physics(state: State, delta: float) -> void:
     match state:
         State.IDLE:
-            move(self.default_gravity_, delta)
+            self.move(self.default_gravity_, delta)
         State.RUNNING:
-            move(self.default_gravity_, delta)
+            self.move(self.default_gravity_, delta)
         State.JUMP:
-            move(0.0 if self.is_first_tick_ else self.default_gravity_, delta)
+            self.move(0.0 if self.is_first_tick_ else self.default_gravity_, delta)
         State.FALL:
-            move(self.default_gravity_, delta)
+            self.move(self.default_gravity_, delta)
         State.LANDING:
-            stand(delta)
+            self.stand(self.default_gravity_, delta)
         State.WALL_SLIDING:
-            move(self.default_gravity_ / 3, delta)
+            self.move(self.default_gravity_ / 3, delta)
             self.graphics_.scale.x = self.get_wall_normal().x
+        State.WALL_JUMP:
+            if self.state_machine_.state_time_ < 0.1:
+                self.stand(0.0 if self.is_first_tick_ else self.default_gravity_, delta)
+                self.graphics_.scale.x = self.get_wall_normal().x
+            else:
+                move(self.default_gravity_, delta)
     self.is_first_tick_ = false
 
 func move(gravity: float, delta: float) -> void:
@@ -52,10 +61,10 @@ func move(gravity: float, delta: float) -> void:
         self.graphics_.scale.x = -1 if direction < 0 else +1
     self.move_and_slide()
 
-func stand(delta: float) -> void:
+func stand(gravity: float, delta: float) -> void:
     var acceleration: float = ACCELERATION_FLOOR if self.is_on_floor() else ACCELERATION_AIR
     self.velocity.x = move_toward(self.velocity.x, 0.0, acceleration * delta)
-    self.velocity.y += self.default_gravity_ * delta
+    self.velocity.y += gravity * delta
     self.move_and_slide()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -65,6 +74,9 @@ func _unhandled_input(event: InputEvent) -> void:
         jump_request_timer_.stop()
         if self.velocity.y < JUMP_VELOCITY / 2:
             self.velocity.y = JUMP_VELOCITY / 2
+
+func can_wall_slide() -> bool:
+    return self.is_on_wall() and self.hand_checker_.is_colliding() and self.foot_checker_.is_colliding()
 
 func get_next_state(state: State) -> State:
     var can_jump: bool = self.is_on_floor() or coyote_timer_.time_left > 0
@@ -90,7 +102,7 @@ func get_next_state(state: State) -> State:
         State.FALL:
             if self.is_on_floor():
                 return State.LANDING if is_still else State.RUNNING
-            if self.is_on_wall() and self.hand_checker_.is_colliding() and self.foot_checker_.is_colliding():
+            if self.can_wall_slide():
                 return State.WALL_SLIDING
         State.LANDING:
             if not is_still:
@@ -98,9 +110,16 @@ func get_next_state(state: State) -> State:
             if not self.animation_player_.is_playing():
                 return State.IDLE
         State.WALL_SLIDING:
+            if self.jump_request_timer_.time_left > 0:
+                return State.WALL_JUMP
             if self.is_on_floor():
                 return State.IDLE
             if not self.is_on_wall():
+                return State.FALL
+        State.WALL_JUMP:
+            if self.can_wall_slide() and not self.is_first_tick_:
+                return State.WALL_SLIDING
+            if self.velocity.y >= 0:
                 return State.FALL
     return state
 
@@ -125,4 +144,9 @@ func transition_state(from: State, to: State) -> void:
             self.animation_player_.play("landing")
         State.WALL_SLIDING:
             self.animation_player_.play("wall_sliding")
+        State.WALL_JUMP:
+            self.animation_player_.play("jump")
+            self.velocity = WALL_JUMP_VELOCITY
+            self.velocity.x *= self.get_wall_normal().x
+            jump_request_timer_.stop()
     self.is_first_tick_ = true
