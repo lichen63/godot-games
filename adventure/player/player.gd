@@ -49,7 +49,7 @@ func move(gravity: float, delta: float) -> void:
     self.velocity.y += gravity * delta
 
     if not is_zero_approx(direction):
-        self.graphics_.scale.x = +1 if direction < 0 else -1
+        self.graphics_.scale.x = -1 if direction < 0 else +1
     self.move_and_slide()
 
 func stand(delta: float) -> void:
