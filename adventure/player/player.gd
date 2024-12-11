@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 enum State {
@@ -8,6 +9,9 @@ enum State {
     LANDING,
     WALL_SLIDING,
     WALL_JUMP,
+    ATTACK_1,
+    ATTACK_2,
+    ATTACK_3,
 }
 
 const RUN_SPEED: float = 160.0
@@ -15,10 +19,13 @@ const ACCELERATION_FLOOR: float = RUN_SPEED / 0.2
 const ACCELERATION_AIR: float = RUN_SPEED / 0.1
 const JUMP_VELOCITY: float = -360.0
 const WALL_JUMP_VELOCITY: Vector2 = Vector2(400, -320.0)
-const GROUND_STATES: Array = [State.IDLE, State.RUNNING, State.LANDING]
+const GROUND_STATES: Array = [State.IDLE, State.RUNNING, State.LANDING, State.ATTACK_1, State.ATTACK_2, State.ATTACK_3]
+
+@export var can_combo: bool = false
 
 var default_gravity_: float = ProjectSettings.get("physics/2d/default_gravity")
 var is_first_tick_: bool = false
+var is_combo_requested: bool = false
 
 @onready var graphics_: Node2D = $Graphics
 @onready var animation_player_: AnimationPlayer = $AnimationPlayer
@@ -49,6 +56,8 @@ func tick_physics(state: State, delta: float) -> void:
                 self.graphics_.scale.x = self.get_wall_normal().x
             else:
                 move(self.default_gravity_, delta)
+        State.ATTACK_1, State.ATTACK_2, State.ATTACK_3:
+            self.stand(self.default_gravity_, delta)
     self.is_first_tick_ = false
 
 func move(gravity: float, delta: float) -> void:
@@ -74,6 +83,8 @@ func _unhandled_input(event: InputEvent) -> void:
         jump_request_timer_.stop()
         if self.velocity.y < JUMP_VELOCITY / 2:
             self.velocity.y = JUMP_VELOCITY / 2
+    if event.is_action_pressed("attack") and self.can_combo:
+        self.is_combo_requested = true
 
 func can_wall_slide() -> bool:
     return self.is_on_wall() and self.hand_checker_.is_colliding() and self.foot_checker_.is_colliding()
@@ -83,17 +94,19 @@ func get_next_state(state: State) -> State:
     var should_jump: bool = can_jump and jump_request_timer_.time_left > 0
     if should_jump:
         return State.JUMP
+    if state in GROUND_STATES and not self.is_on_floor():
+        return State.FALL
     var direction: float = Input.get_axis("move_left", "move_right")
     var is_still: bool = is_zero_approx(direction) and is_zero_approx(self.velocity.x)
     match state:
         State.IDLE:
-            if not self.is_on_floor():
-                return State.FALL
+            if Input.is_action_just_pressed("attack"):
+                return State.ATTACK_1
             if not is_still:
                 return State.RUNNING
         State.RUNNING:
-            if not self.is_on_floor():
-                return State.FALL
+            if Input.is_action_just_pressed("attack"):
+                return State.ATTACK_1
             if is_still:
                 return State.IDLE
         State.JUMP:
@@ -121,14 +134,23 @@ func get_next_state(state: State) -> State:
                 return State.WALL_SLIDING
             if self.velocity.y >= 0:
                 return State.FALL
+        State.ATTACK_1:
+            if not self.animation_player_.is_playing():
+                return State.ATTACK_2 if self.is_combo_requested else State.IDLE
+        State.ATTACK_2:
+            if not self.animation_player_.is_playing():
+                return State.ATTACK_3 if self.is_combo_requested else State.IDLE
+        State.ATTACK_3:
+            if not self.animation_player_.is_playing():
+                return State.IDLE
     return state
 
 func transition_state(from: State, to: State) -> void:
-    #print("[%s] %s => %s" % [
-        #Engine.get_physics_frames(),
-        #State.keys()[from] if from != -1 else "<Start>",
-        #State.keys()[to],
-    #])
+    print("[%s] %s => %s" % [
+        Engine.get_physics_frames(),
+        State.keys()[from] if from != -1 else "<Start>",
+        State.keys()[to],
+    ])
     if from in GROUND_STATES and to in GROUND_STATES:
         self.coyote_timer_.stop()
     match to:
@@ -154,4 +176,13 @@ func transition_state(from: State, to: State) -> void:
             self.velocity = WALL_JUMP_VELOCITY
             self.velocity.x *= self.get_wall_normal().x
             jump_request_timer_.stop()
+        State.ATTACK_1:
+            self.animation_player_.play("attack_1")
+            self.is_combo_requested = false
+        State.ATTACK_2:
+            self.animation_player_.play("attack_2")
+            self.is_combo_requested = false
+        State.ATTACK_3:
+            self.animation_player_.play("attack_3")
+            self.is_combo_requested = false
     self.is_first_tick_ = true
