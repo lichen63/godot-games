@@ -34,7 +34,7 @@ func get_next_state(state: State) -> State:
         return State.RUN
     match state:
         State.IDLE:
-            if self.state_machine.state_time_ > 2:
+            if self.state_machine.state_time > 2:
                 return State.WALK
         State.WALK:
             if self.wall_checker.is_colliding() or not self.floor_checker.is_colliding():
@@ -45,11 +45,11 @@ func get_next_state(state: State) -> State:
     return state
 
 func transition_state(_from: State, to: State) -> void:
-    #print("[%s] %s => %s" % [
-        #Engine.get_physics_frames(),
-        #State.keys()[from] if from != -1 else "<Start>",
-        #State.keys()[to],
-    #])
+    # print("[%s] %s => %s" % [
+    #     Engine.get_physics_frames(),
+    #     State.keys()[from] if from != -1 else "<Start>",
+    #     State.keys()[to],
+    # ])
     match to:
         State.IDLE:
             self.animation_player.play("idle")
@@ -62,3 +62,6 @@ func transition_state(_from: State, to: State) -> void:
                 self.floor_checker.force_raycast_update()
         State.RUN:
             self.animation_player.play("run")
+
+func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
+    print("Ouch!")
