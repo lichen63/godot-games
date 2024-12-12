@@ -12,6 +12,8 @@ enum State {
     ATTACK_1,
     ATTACK_2,
     ATTACK_3,
+    HURT,
+    DYING,
 }
 
 const RUN_SPEED: float = 160.0
@@ -20,12 +22,14 @@ const ACCELERATION_AIR: float = RUN_SPEED / 0.1
 const JUMP_VELOCITY: float = -360.0
 const WALL_JUMP_VELOCITY: Vector2 = Vector2(400, -320.0)
 const GROUND_STATES: Array = [State.IDLE, State.RUNNING, State.LANDING, State.ATTACK_1, State.ATTACK_2, State.ATTACK_3]
+const KNOCKBACK_AMOUNT: int = 512
 
 @export var can_combo: bool = false
 
 var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity")
 var is_first_tick: bool = false
 var is_combo_requested: bool = false
+var pending_damage: Damage = null
 
 @onready var graphics: Node2D = $Graphics
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -34,8 +38,14 @@ var is_combo_requested: bool = false
 @onready var hand_checker: RayCast2D = $Graphics/HandChecker
 @onready var foot_checker: RayCast2D = $Graphics/FootChecker
 @onready var state_machine: StateMachine = $StateMachine
+@onready var stats: Stats = $Stats
+@onready var invincible_timer: Timer = $InvincibleTimer
 
 func tick_physics(state: State, delta: float) -> void:
+    if self.invincible_timer.time_left > 0:
+        self.graphics.modulate.a = sin(Time.get_ticks_msec() / 20) * 0.5 + 0.5
+    else:
+        self.graphics.modulate.a = 1
     match state:
         State.IDLE:
             self.move(self.default_gravity, delta)
@@ -58,6 +68,8 @@ func tick_physics(state: State, delta: float) -> void:
                 move(self.default_gravity, delta)
         State.ATTACK_1, State.ATTACK_2, State.ATTACK_3:
             self.stand(self.default_gravity, delta)
+        State.HURT, State.DYING:
+            self.stand(self.default_gravity, delta)
     self.is_first_tick = false
 
 func move(gravity: float, delta: float) -> void:
@@ -76,6 +88,9 @@ func stand(gravity: float, delta: float) -> void:
     self.velocity.y += gravity * delta
     self.move_and_slide()
 
+func die() -> void:
+    self.get_tree().reload_current_scene()
+
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("jump"):
         jump_request_timer.start()
@@ -89,7 +104,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func can_wall_slide() -> bool:
     return self.is_on_wall() and self.hand_checker.is_colliding() and self.foot_checker.is_colliding()
 
-func get_next_state(state: State) -> State:
+func get_next_state(state: State) -> int:
+    if self.stats.health == 0:
+        return StateMachine.KEEP_CURRENT if state == State.DYING else State.DYING
+    if self.pending_damage:
+        return State.HURT
     var can_jump: bool = self.is_on_floor() or coyote_timer.time_left > 0
     var should_jump: bool = can_jump and jump_request_timer.time_left > 0
     if should_jump:
@@ -143,7 +162,10 @@ func get_next_state(state: State) -> State:
         State.ATTACK_3:
             if not self.animation_player.is_playing():
                 return State.IDLE
-    return state
+        State.HURT:
+            if not self.animation_player.is_playing():
+                return State.IDLE
+    return StateMachine.KEEP_CURRENT
 
 func transition_state(from: State, to: State) -> void:
     #print("[%s] %s => %s" % [
@@ -185,4 +207,21 @@ func transition_state(from: State, to: State) -> void:
         State.ATTACK_3:
             self.animation_player.play("attack_3")
             self.is_combo_requested = false
+        State.HURT:
+            self.animation_player.play("hurt")
+            self.stats.health -= self.pending_damage.amount
+            var dir: Vector2 = self.pending_damage.source.global_position.direction_to(self.global_position)
+            self.velocity = dir * KNOCKBACK_AMOUNT
+            self.pending_damage = null
+            self.invincible_timer.start()
+        State.DYING:
+            self.animation_player.play("die")
+            self.invincible_timer.stop()
     self.is_first_tick = true
+
+func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
+    if self.invincible_timer.time_left > 0:
+        return
+    self.pending_damage = Damage.new()
+    self.pending_damage.amount = 1
+    self.pending_damage.source = hitbox.owner

@@ -20,8 +20,12 @@ var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity")
 @onready var graphics: Node2D = $Graphics
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var state_machine: StateMachine = $StateMachine
+@onready var stats: Stats = $Stats
 
 func move(speed: float, delta: float) -> void:
     self.velocity.x = move_toward(self.velocity.x, speed * self.direction, self.acceleration * delta)
     self.velocity.y += self.default_gravity * delta
     self.move_and_slide()
+
+func die() -> void:
+    self.queue_free()
