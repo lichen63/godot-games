@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://enemy/enemy.gd" id="1_32m04"]
 [ext_resource type="Script" path="res://global/hitbox.gd" id="2_rgkih"]
 [ext_resource type="Script" path="res://global/hurtbox.gd" id="3_xgrjq"]
-[ext_resource type="Script" path="res://global/stats.gd" id="5_x0unc"]
+[ext_resource type="Script" path="res://global/stats_1.gd" id="5_x0unc"]
 
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://global/state_machine.gd" id="3_1e4j8"]
 [ext_resource type="Script" path="res://global/hurtbox.gd" id="3_k2qfs"]
 [ext_resource type="Script" path="res://global/hitbox.gd" id="4_8plbj"]
-[ext_resource type="Script" path="res://global/stats.gd" id="7_rkeop"]
+[ext_resource type="Script" path="res://global/stats_1.gd" id="7_rkeop"]
 [ext_resource type="PackedScene" uid="uid://bhtxxmflwwvjs" path="res://ui/status_panel.tscn" id="8_mltf3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wogex"]
