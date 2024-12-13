@@ -33,4 +33,3 @@ script = ExtResource("1_1trhm")
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("5_x0unc")
-max_health = null
