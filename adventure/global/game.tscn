@@ -3,8 +3,17 @@
 [ext_resource type="Script" path="res://global/game.gd" id="1_enk4g"]
 [ext_resource type="Script" path="res://global/stats.gd" id="2_5bwc4"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="CanvasLayer"]
+layer = 99
 script = ExtResource("1_enk4g")
 
 [node name="PlayerStats" type="Node" parent="."]
 script = ExtResource("2_5bwc4")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)

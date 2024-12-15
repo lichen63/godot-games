@@ -63,6 +63,9 @@ var interacting_with: Array[Interactable] = []
 @onready var slide_request_timer: Timer = $SlideRequestTimer
 @onready var interaction_icon: AnimatedSprite2D = $InteractionIcon
 
+func _ready() -> void:
+    self.stand(self.default_gravity, 0.01)
+
 func tick_physics(state: State, delta: float) -> void:
     self.interaction_icon.visible = not self.interacting_with.is_empty()
     if self.invincible_timer.time_left > 0:
@@ -233,11 +236,11 @@ func get_next_state(state: State) -> int:
     return StateMachine.KEEP_CURRENT
 
 func transition_state(from: State, to: State) -> void:
-    #print("[%s] %s => %s" % [
-        #Engine.get_physics_frames(),
-        #State.keys()[from] if from != -1 else "<Start>",
-        #State.keys()[to],
-    #])
+    # print("[%s] %s => %s" % [
+    #     Engine.get_physics_frames(),
+    #     State.keys()[from] if from != -1 else "<Start>",
+    #     State.keys()[to],
+    # ])
     if from in GROUND_STATES and to in GROUND_STATES:
         self.coyote_timer.stop()
     match to:
