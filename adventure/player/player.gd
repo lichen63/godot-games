@@ -1,6 +1,11 @@
 class_name Player
 extends CharacterBody2D
 
+enum Direction {
+    LEFT = -1,
+    RIGHT = +1,
+}
+
 enum State {
     IDLE,
     RUNNING,
@@ -32,6 +37,12 @@ const LANDING_HEIGHT: float = 100.0
 const SLIDING_ENERGY: float = 4.0
 
 @export var can_combo: bool = false
+@export var direction: Direction = Direction.RIGHT:
+    set(v):
+        direction = v
+        if not self.is_node_ready():
+            await self.ready
+        self.graphics.scale.x = v
 
 var default_gravity: float = ProjectSettings.get("physics/2d/default_gravity")
 var is_first_tick: bool = false
@@ -47,7 +58,7 @@ var interacting_with: Array[Interactable] = []
 @onready var hand_checker: RayCast2D = $Graphics/HandChecker
 @onready var foot_checker: RayCast2D = $Graphics/FootChecker
 @onready var state_machine: StateMachine = $StateMachine
-@onready var stats: Stats = $Stats
+@onready var stats: Stats = Game.player_stats
 @onready var invincible_timer: Timer = $InvincibleTimer
 @onready var slide_request_timer: Timer = $SlideRequestTimer
 @onready var interaction_icon: AnimatedSprite2D = $InteractionIcon
@@ -71,11 +82,11 @@ func tick_physics(state: State, delta: float) -> void:
             self.stand(self.default_gravity, delta)
         State.WALL_SLIDING:
             self.move(self.default_gravity / 3, delta)
-            self.graphics.scale.x = self.get_wall_normal().x
+            self.direction = Direction.LEFT if self.get_wall_normal().x else Direction.RIGHT
         State.WALL_JUMP:
             if self.state_machine.state_time < 0.1:
                 self.stand(0.0 if self.is_first_tick else self.default_gravity, delta)
-                self.graphics.scale.x = self.get_wall_normal().x
+                self.direction = Direction.LEFT if self.get_wall_normal().x else Direction.RIGHT
             else:
                 move(self.default_gravity, delta)
         State.ATTACK_1, State.ATTACK_2, State.ATTACK_3:
@@ -89,13 +100,13 @@ func tick_physics(state: State, delta: float) -> void:
     self.is_first_tick = false
 
 func move(gravity: float, delta: float) -> void:
-    var direction: float = Input.get_axis("move_left", "move_right")
+    var movement: float = Input.get_axis("move_left", "move_right")
     var acceleration: float = ACCELERATION_FLOOR if self.is_on_floor() else ACCELERATION_AIR
-    self.velocity.x = move_toward(self.velocity.x, direction * RUN_SPEED, acceleration * delta)
+    self.velocity.x = move_toward(self.velocity.x, movement * RUN_SPEED, acceleration * delta)
     self.velocity.y += gravity * delta
 
-    if not is_zero_approx(direction):
-        self.graphics.scale.x = -1 if direction < 0 else + 1
+    if not is_zero_approx(movement):
+        self.direction = Direction.LEFT if movement < 0 else Direction.RIGHT
     self.move_and_slide()
 
 func stand(gravity: float, delta: float) -> void:
@@ -157,8 +168,8 @@ func get_next_state(state: State) -> int:
         return State.JUMP
     if state in GROUND_STATES and not self.is_on_floor():
         return State.FALL
-    var direction: float = Input.get_axis("move_left", "move_right")
-    var is_still: bool = is_zero_approx(direction) and is_zero_approx(self.velocity.x)
+    var movement: float = Input.get_axis("move_left", "move_right")
+    var is_still: bool = is_zero_approx(movement) and is_zero_approx(self.velocity.x)
     match state:
         State.IDLE:
             if Input.is_action_just_pressed("attack"):
