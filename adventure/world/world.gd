@@ -20,3 +20,17 @@ func update_player(pos: Vector2, dir: Player.Direction) -> void:
     self.player.direction = dir
     self.camera_2d.reset_smoothing()
     self.camera_2d.force_update_scroll()
+
+func to_dict() -> Dictionary:
+    var enemies_alive: Array = []
+    for node in self.get_tree().get_nodes_in_group("enemies"):
+        enemies_alive.append(get_path_to(node))
+    return {
+        enemies_alive = enemies_alive,
+    }
+
+func from_dict(dict: Dictionary) -> void:
+    for node in self.get_tree().get_nodes_in_group("enemies"):
+        var path: String = get_path_to(node)
+        if not path in dict.enemies_alive:
+            node.queue_free()

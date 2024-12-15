@@ -434,3 +434,6 @@ region_rect = Rect2(210, 197, 124, 86)
 
 [node name="Boar" parent="." instance=ExtResource("9_01koq")]
 position = Vector2(706, 30)
+
+[node name="Boar2" parent="." instance=ExtResource("9_01koq")]
+position = Vector2(288, 144)
