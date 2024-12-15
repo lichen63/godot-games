@@ -38,6 +38,7 @@ var is_first_tick: bool = false
 var is_combo_requested: bool = false
 var pending_damage: Damage = null
 var fall_from_y: float = 0.0
+var interacting_with: Array[Interactable] = []
 
 @onready var graphics: Node2D = $Graphics
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -49,8 +50,10 @@ var fall_from_y: float = 0.0
 @onready var stats: Stats = $Stats
 @onready var invincible_timer: Timer = $InvincibleTimer
 @onready var slide_request_timer: Timer = $SlideRequestTimer
+@onready var interaction_icon: AnimatedSprite2D = $InteractionIcon
 
 func tick_physics(state: State, delta: float) -> void:
+    self.interaction_icon.visible = not self.interacting_with.is_empty()
     if self.invincible_timer.time_left > 0:
         self.graphics.modulate.a = sin(Time.get_ticks_msec() / 20) * 0.5 + 0.5
     else:
@@ -109,6 +112,16 @@ func slide(delta: float) -> void:
 func die() -> void:
     self.get_tree().reload_current_scene()
 
+func register_interactable(v: Interactable) -> void:
+    if self.state_machine.cur_state == State.DYING:
+        return
+    if v in self.interacting_with:
+        return
+    self.interacting_with.append(v)
+
+func unregister_interactable(v: Interactable) -> void:
+    self.interacting_with.erase(v)
+
 func _unhandled_input(event: InputEvent) -> void:
     if event.is_action_pressed("jump"):
         jump_request_timer.start()
@@ -120,6 +133,8 @@ func _unhandled_input(event: InputEvent) -> void:
         self.is_combo_requested = true
     if event.is_action_pressed("slide"):
         self.slide_request_timer.start()
+    if event.is_action_pressed("interact") and not self.interacting_with.is_empty():
+        self.interacting_with.back().interact()
 
 func can_wall_slide() -> bool:
     return self.is_on_wall() and self.hand_checker.is_colliding() and self.foot_checker.is_colliding()
@@ -257,6 +272,7 @@ func transition_state(from: State, to: State) -> void:
         State.DYING:
             self.animation_player.play("die")
             self.invincible_timer.stop()
+            self.interacting_with.clear()
         State.SLIDING_START:
             self.animation_player.play("sliding_start")
             self.slide_request_timer.stop()
