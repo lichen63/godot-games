@@ -125,6 +125,7 @@ func slide(delta: float) -> void:
 
 func die() -> void:
     self.get_tree().reload_current_scene()
+    self.stats.reset()
 
 func register_interactable(v: Interactable) -> void:
     if self.state_machine.cur_state == State.DYING:
