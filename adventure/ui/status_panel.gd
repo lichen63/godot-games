@@ -13,6 +13,10 @@ func _ready() -> void:
     self.update_health(true)
     self.stats.energy_changed.connect(update_energy)
     self.update_energy()
+    self.tree_exited.connect(func():
+        self.stats.health_changed.disconnect(update_health)
+        self.stats.energy_changed.disconnect(update_energy)
+    )
 
 func update_health(skip_anim: bool = false) -> void:
     var percentage: float = self.stats.health / float(self.stats.max_health)
