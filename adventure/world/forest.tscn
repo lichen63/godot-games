@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://dur5oxkruwssa"]
+[gd_scene load_steps=16 format=4 uid="uid://dur5oxkruwssa"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_eyv3e"]
 [ext_resource type="Texture2D" uid="uid://wb2lq8nkoi4l" path="res://assets/images/tree-assets.png" id="2_bbipb"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://global/entry_point.gd" id="4_hqqov"]
 [ext_resource type="PackedScene" uid="uid://blmqoumpmjln8" path="res://player/player.tscn" id="5_8k7yq"]
 [ext_resource type="Texture2D" uid="uid://c35iw7xnb557w" path="res://assets/images/background.png" id="6_uc0ap"]
+[ext_resource type="PackedScene" uid="uid://blu0uh8ucixw6" path="res://objects/save_stone.tscn" id="6_ybncv"]
 [ext_resource type="Texture2D" uid="uid://r05cdnftxig1" path="res://assets/images/background-hills.png" id="7_a85f1"]
 [ext_resource type="Texture2D" uid="uid://bmjeufy5q2ldq" path="res://assets/images/background-trees.png" id="8_shmss"]
 [ext_resource type="PackedScene" uid="uid://ogy6gp25hym5" path="res://enemy/boar.tscn" id="9_01koq"]
@@ -165,6 +166,9 @@ script = ExtResource("4_hqqov")
 position = Vector2(855, 158)
 script = ExtResource("4_hqqov")
 direction = -1
+
+[node name="SaveStone" parent="TileMapLayer1" instance=ExtResource("6_ybncv")]
+position = Vector2(274, -98)
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAGAAsAAAAHAAMAAAAJAAsAAAAKAAIAAAANAAsAAAAIAAIAAAAUAAgAAAAJAAIAAAAdAAgAAAAGAAMAAAAeAAgAAAAJAAIAAAAIAAEAAAAJAAIAAAAlAAsAAAAGAAMAAAAnAAsAAAAJAAMAAAAoAAsAAAAJAAIAAAApAAsAAAAKAAIAAAAvAAsAAAAJAAMAAAAnAPf/AAAIAAMAAAAsAPf/AAAIAAMAAAAKAPn/AAAJAAMAAAARAPn/AAAJAAMAAAAqAAEAAAAIAAIAAAAtAAEAAAAGAAMAAAAxAP7/AAAJAAMAAAA=")

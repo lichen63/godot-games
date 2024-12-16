@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=4 uid="uid://bvichoa70de58"]
+[gd_scene load_steps=8 format=4 uid="uid://bvichoa70de58"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_4vo0v"]
 [ext_resource type="TileSet" uid="uid://c8tu2dbh8jt7h" path="res://world/tiles.tres" id="3_snk1p"]
 [ext_resource type="PackedScene" uid="uid://dxysppglnkt4u" path="res://objects/mine_gate.tscn" id="4_yy02o"]
+[ext_resource type="PackedScene" uid="uid://blu0uh8ucixw6" path="res://objects/save_stone.tscn" id="5_56jnq"]
 [ext_resource type="Script" path="res://global/entry_point.gd" id="5_e5kqg"]
 [ext_resource type="PackedScene" uid="uid://blmqoumpmjln8" path="res://player/player.tscn" id="6_noman"]
 [ext_resource type="PackedScene" uid="uid://ogy6gp25hym5" path="res://enemy/boar.tscn" id="10_kwlpw"]
@@ -25,6 +26,9 @@ entry_point = "BottomEntry"
 [node name="EntryPoint" type="Marker2D" parent="TileMapLayer1"]
 position = Vector2(65, 544)
 script = ExtResource("5_e5kqg")
+
+[node name="SaveStone" parent="TileMapLayer1" instance=ExtResource("5_56jnq")]
+position = Vector2(345, 494)
 
 [node name="Player" parent="." instance=ExtResource("6_noman")]
 position = Vector2(458, 443)
@@ -52,3 +56,5 @@ tile_set = ExtResource("3_snk1p")
 
 [node name="Boar" parent="." instance=ExtResource("10_kwlpw")]
 position = Vector2(964, 367)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
