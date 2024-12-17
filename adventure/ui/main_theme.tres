@@ -1,0 +1,29 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://d1nsux62cuh1x"]
+
+[ext_resource type="Texture2D" uid="uid://cury7j8y5cxk" path="res://assets/images/hud.png" id="1_h87ob"]
+[ext_resource type="FontFile" uid="uid://cldqcnhhufjvc" path="res://assets/fonts/smiley-sans-oblique.otf" id="1_pxe0k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8nw7w"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6f672"]
+texture = ExtResource("1_h87ob")
+texture_margin_left = 3.0
+texture_margin_top = 3.0
+texture_margin_right = 3.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(94, 14, 20, 20)
+
+[resource]
+default_font = ExtResource("1_pxe0k")
+Button/colors/font_outline_color = Color(0, 0, 0, 0.435294)
+Button/colors/font_pressed_color = Color(1, 1, 1, 0.505882)
+Button/constants/outline_size = 6
+Button/styles/disabled = SubResource("StyleBoxEmpty_8nw7w")
+Button/styles/focus = SubResource("StyleBoxTexture_6f672")
+Button/styles/hover = SubResource("StyleBoxEmpty_8nw7w")
+Button/styles/normal = SubResource("StyleBoxEmpty_8nw7w")
+Button/styles/pressed = SubResource("StyleBoxEmpty_8nw7w")
