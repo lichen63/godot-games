@@ -15,11 +15,12 @@ func _ready() -> void:
     self.color_rect.color.a = 0
 
 func change_scene(path: String, params: Dictionary = {}) -> void:
+    var duration: float = params.get("duration", 0.2)
     var tree: SceneTree = self.get_tree()
     tree.paused = true
     var tween: Tween = self.create_tween()
     tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
-    tween.tween_property(self.color_rect, "color:a", 1, 0.2)
+    tween.tween_property(self.color_rect, "color:a", 1, duration)
     await tween.finished
     if tree.current_scene is World:
         var old_name: String = tree.current_scene.scene_file_path.get_file().get_basename()
@@ -41,7 +42,8 @@ func change_scene(path: String, params: Dictionary = {}) -> void:
             tree.current_scene.update_player(params.position, params.direction)
     tree.paused = false
     tween = self.create_tween()
-    tween.tween_property(self.color_rect, "color:a", 0, 0.2)
+    tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+    tween.tween_property(self.color_rect, "color:a", 0, duration)
 
 func save_game() -> void:
     var scene: Node = self.get_tree().current_scene
@@ -83,13 +85,16 @@ func load_game() -> void:
 
 func new_game() -> void:
     self.change_scene("res://world/forest.tscn", {
+        "duration": 1.0,
         "init": func():
             self.world_states = {}
             self.player_stats.from_dict(self.default_player_stats)
     })
 
 func back_to_title() -> void:
-    self.change_scene("res://ui/title_screen.tscn")
+    self.change_scene("res://ui/title_screen.tscn", {
+        "duration": 1.0,
+    })
 
 func has_save() -> bool:
     return FileAccess.file_exists(SAVE_PATH)

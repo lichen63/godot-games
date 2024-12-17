@@ -40,7 +40,3 @@ func from_dict(data: Dictionary) -> void:
     self.max_health = data["max_health"]
     self.energy = data["energy"]
     self.health = data["health"]
-
-func reset() -> void:
-    self.health = self.max_health
-    self.energy = self.max_energy

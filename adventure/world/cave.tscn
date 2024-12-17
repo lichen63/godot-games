@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=4 uid="uid://bvichoa70de58"]
 
-[ext_resource type="Script" path="res://world/world.gd" id="1_4vo0v"]
+[ext_resource type="Script" path="res://world/cave.gd" id="1_mnnm7"]
 [ext_resource type="TileSet" uid="uid://c8tu2dbh8jt7h" path="res://world/tiles.tres" id="3_snk1p"]
 [ext_resource type="PackedScene" uid="uid://dxysppglnkt4u" path="res://objects/mine_gate.tscn" id="4_yy02o"]
 [ext_resource type="PackedScene" uid="uid://blu0uh8ucixw6" path="res://objects/save_stone.tscn" id="5_56jnq"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ogy6gp25hym5" path="res://enemy/boar.tscn" id="10_kwlpw"]
 
 [node name="World" type="Node2D"]
-script = ExtResource("1_4vo0v")
+script = ExtResource("1_mnnm7")
 metadata/_edit_vertical_guides_ = [560.0]
 metadata/_edit_horizontal_guides_ = [272.0]
 
@@ -58,3 +58,5 @@ tile_set = ExtResource("3_snk1p")
 position = Vector2(964, 367)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[connection signal="died" from="Boar" to="." method="_on_boar_died"]
