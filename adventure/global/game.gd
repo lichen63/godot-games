@@ -71,7 +71,7 @@ func load_game() -> void:
         return
     var json: String = file.get_as_text()
     var data: Dictionary = JSON.parse_string(json) as Dictionary
-    self.change_scene(data.scene, {
+    await self.change_scene(data.scene, {
         "direction": data.player.direction,
         "position": Vector2(data.player.position.x, data.player.position.y),
         "init": func():
