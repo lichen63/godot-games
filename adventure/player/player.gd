@@ -252,8 +252,9 @@ func transition_state(from: State, to: State) -> void:
         State.JUMP:
             self.animation_player.play("jump")
             self.velocity.y = JUMP_VELOCITY
-            coyote_timer.stop()
-            jump_request_timer.stop()
+            self.coyote_timer.stop()
+            self.jump_request_timer.stop()
+            SoundManager.play_sfx("Jump")
         State.FALL:
             self.animation_player.play("fall")
             if from in GROUND_STATES:
@@ -271,6 +272,7 @@ func transition_state(from: State, to: State) -> void:
         State.ATTACK_1:
             self.animation_player.play("attack_1")
             self.is_combo_requested = false
+            SoundManager.play_sfx("Attack")
         State.ATTACK_2:
             self.animation_player.play("attack_2")
             self.is_combo_requested = false

@@ -13,6 +13,7 @@ var tween: Tween = null
 
 func _ready() -> void:
     self.show_line(0)
+    SoundManager.play_bgm(preload("res://assets/sounds/bgm/game-over-loop.mp3"))
 
 func _input(event: InputEvent) -> void:
     if self.tween.is_running():

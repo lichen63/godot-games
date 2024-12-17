@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://bvichoa70de58"]
+[gd_scene load_steps=9 format=4 uid="uid://bvichoa70de58"]
 
 [ext_resource type="Script" path="res://world/cave.gd" id="1_mnnm7"]
+[ext_resource type="AudioStream" uid="uid://d3r6hrjbyfsdd" path="res://assets/sounds/bgm/boss-fixing-loop.mp3" id="2_1x3n1"]
 [ext_resource type="TileSet" uid="uid://c8tu2dbh8jt7h" path="res://world/tiles.tres" id="3_snk1p"]
 [ext_resource type="PackedScene" uid="uid://dxysppglnkt4u" path="res://objects/mine_gate.tscn" id="4_yy02o"]
 [ext_resource type="PackedScene" uid="uid://blu0uh8ucixw6" path="res://objects/save_stone.tscn" id="5_56jnq"]
@@ -10,6 +11,7 @@
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_mnnm7")
+bgm = ExtResource("2_1x3n1")
 metadata/_edit_vertical_guides_ = [560.0]
 metadata/_edit_horizontal_guides_ = [272.0]
 
