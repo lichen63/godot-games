@@ -1,6 +1,7 @@
 extends Node
 
 const SAVE_PATH: String = "user://data.sav"
+const CONFIG_PATH: String = "user://config.ini"
 
 # scene_name => {
 #     enemies_alive => [enemy_path],
@@ -13,6 +14,7 @@ var world_states: Dictionary = {}
 
 func _ready() -> void:
     self.color_rect.color.a = 0
+    self.load_config()
 
 func change_scene(path: String, params: Dictionary = {}) -> void:
     var duration: float = params.get("duration", 0.2)
@@ -98,3 +100,17 @@ func back_to_title() -> void:
 
 func has_save() -> bool:
     return FileAccess.file_exists(SAVE_PATH)
+
+func save_config() -> void:
+    var config: ConfigFile = ConfigFile.new()
+    config.set_value("audio", "master", SoundManager.get_volume(SoundManager.Bus.MASTER))
+    config.set_value("audio", "sfx", SoundManager.get_volume(SoundManager.Bus.SFX))
+    config.set_value("audio", "bgm", SoundManager.get_volume(SoundManager.Bus.BGM))
+    config.save(CONFIG_PATH)
+    
+func load_config() -> void:
+    var config: ConfigFile = ConfigFile.new()
+    config.load(CONFIG_PATH)
+    SoundManager.set_volume(SoundManager.Bus.MASTER, config.get_value("audio", "master", 0.5))
+    SoundManager.set_volume(SoundManager.Bus.SFX, config.get_value("audio", "bgm", 1.0))
+    SoundManager.set_volume(SoundManager.Bus.SFX, config.get_value("audio", "bgm", 1.0))
