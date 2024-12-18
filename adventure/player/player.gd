@@ -63,6 +63,7 @@ var interacting_with: Array[Interactable] = []
 @onready var slide_request_timer: Timer = $SlideRequestTimer
 @onready var interaction_icon: AnimatedSprite2D = $InteractionIcon
 @onready var game_over_screen: Control = $CanvasLayer/GameOverScreen
+@onready var pause_screen: Control = $CanvasLayer/PauseScreen
 
 func _ready() -> void:
     self.stand(self.default_gravity, 0.01)
@@ -150,6 +151,8 @@ func _unhandled_input(event: InputEvent) -> void:
         self.slide_request_timer.start()
     if event.is_action_pressed("interact") and not self.interacting_with.is_empty():
         self.interacting_with.back().interact()
+    if event.is_action_pressed("pause"):
+        self.pause_screen.show_pause()
 
 func can_wall_slide() -> bool:
     return self.is_on_wall() and self.hand_checker.is_colliding() and self.foot_checker.is_colliding()

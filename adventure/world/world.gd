@@ -18,10 +18,6 @@ func _ready() -> void:
     if self.bgm:
         SoundManager.play_bgm(self.bgm)
 
-func _unhandled_input(event: InputEvent) -> void:
-    if event.is_action_pressed("ui_cancel"):
-        Game.back_to_title()
-
 func update_player(pos: Vector2, dir: Player.Direction) -> void:
     self.player.global_position = pos
     self.player.fall_from_y = pos.y

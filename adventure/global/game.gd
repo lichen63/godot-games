@@ -104,13 +104,13 @@ func has_save() -> bool:
 func save_config() -> void:
     var config: ConfigFile = ConfigFile.new()
     config.set_value("audio", "master", SoundManager.get_volume(SoundManager.Bus.MASTER))
-    config.set_value("audio", "sfx", SoundManager.get_volume(SoundManager.Bus.SFX))
     config.set_value("audio", "bgm", SoundManager.get_volume(SoundManager.Bus.BGM))
+    config.set_value("audio", "sfx", SoundManager.get_volume(SoundManager.Bus.SFX))
     config.save(CONFIG_PATH)
     
 func load_config() -> void:
     var config: ConfigFile = ConfigFile.new()
     config.load(CONFIG_PATH)
     SoundManager.set_volume(SoundManager.Bus.MASTER, config.get_value("audio", "master", 0.5))
-    SoundManager.set_volume(SoundManager.Bus.SFX, config.get_value("audio", "bgm", 1.0))
-    SoundManager.set_volume(SoundManager.Bus.SFX, config.get_value("audio", "bgm", 1.0))
+    SoundManager.set_volume(SoundManager.Bus.BGM, config.get_value("audio", "bgm", 1.0))
+    SoundManager.set_volume(SoundManager.Bus.SFX, config.get_value("audio", "sfx", 1.0))
