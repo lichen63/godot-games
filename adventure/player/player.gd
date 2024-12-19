@@ -284,6 +284,7 @@ func transition_state(from: State, to: State) -> void:
             self.is_combo_requested = false
         State.HURT:
             self.animation_player.play("hurt")
+            Input.start_joy_vibration(0, 0, 0.8, 0.8)
             self.stats.health -= self.pending_damage.amount
             var dir: Vector2 = self.pending_damage.source.global_position.direction_to(self.global_position)
             self.velocity = dir * KNOCKBACK_AMOUNT

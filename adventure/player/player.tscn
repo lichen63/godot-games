@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://blmqoumpmjln8"]
+[gd_scene load_steps=43 format=3 uid="uid://blmqoumpmjln8"]
 
 [ext_resource type="Texture2D" uid="uid://24an7fded3y8" path="res://assets/images/char-blue-1.png" id="1_be1n8"]
 [ext_resource type="Script" path="res://player/player.gd" id="1_dmar2"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bhtxxmflwwvjs" path="res://ui/status_panel.tscn" id="8_mltf3"]
 [ext_resource type="Texture2D" uid="uid://dkckpaj4hl47b" path="res://assets/images/gdb-keyboard-2.png" id="9_3b1my"]
 [ext_resource type="PackedScene" uid="uid://byhfp4k255h5o" path="res://ui/pause_screen.tscn" id="9_sdedc"]
+[ext_resource type="Texture2D" uid="uid://bbqk8s4frvnkh" path="res://assets/images/gdb-switch-2.png" id="11_rb28s"]
+[ext_resource type="Script" path="res://player/interaction_icon.gd" id="12_l3457"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wogex"]
 size = Vector2(14, 30)
@@ -1233,6 +1235,22 @@ region = Rect2(96, 272, 16, 16)
 atlas = ExtResource("9_3b1my")
 region = Rect2(96, 384, 16, 16)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_28srj"]
+atlas = ExtResource("11_rb28s")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jms07"]
+atlas = ExtResource("11_rb28s")
+region = Rect2(64, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46et0"]
+atlas = ExtResource("11_rb28s")
+region = Rect2(80, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fsj3x"]
+atlas = ExtResource("11_rb28s")
+region = Rect2(96, 48, 16, 16)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_3ewbx"]
 animations = [{
 "frames": [{
@@ -1249,8 +1267,25 @@ animations = [{
 "texture": SubResource("AtlasTexture_tlbbl")
 }],
 "loop": true,
-"name": &"default",
+"name": &"keyboard",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28srj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jms07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46et0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fsj3x")
+}],
+"loop": true,
+"name": &"nintendo",
+"speed": 5.0
 }]
 
 [node name="Player" type="CharacterBody2D"]
@@ -1345,8 +1380,7 @@ offset_bottom = 26.0
 [node name="InteractionIcon" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -41)
 sprite_frames = SubResource("SpriteFrames_3ewbx")
-autoplay = "default"
-frame = 1
-frame_progress = 0.252271
+animation = &"keyboard"
+script = ExtResource("12_l3457")
 
 [connection signal="hurt" from="Graphics/Hurtbox" to="." method="_on_hurtbox_hurt"]
