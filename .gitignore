@@ -16,3 +16,13 @@ mono_crash.*.json
 
 # MacOS specific ignores
 **/.DS_Store
+
+# Export files
+# MacOS
+*.dmg
+# Windows
+# Ignore all .exe files in all subdirectories
+**/*.exe
+# Exclude the "tools" folder from being ignored
+!tools/
+!tools/**/*.exe
