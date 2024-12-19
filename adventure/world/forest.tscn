@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://dur5oxkruwssa"]
+[gd_scene load_steps=18 format=4 uid="uid://dur5oxkruwssa"]
 
 [ext_resource type="Script" path="res://world/world.gd" id="1_eyv3e"]
 [ext_resource type="Texture2D" uid="uid://wb2lq8nkoi4l" path="res://assets/images/tree-assets.png" id="2_bbipb"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://blu0uh8ucixw6" path="res://objects/save_stone.tscn" id="6_ybncv"]
 [ext_resource type="Texture2D" uid="uid://r05cdnftxig1" path="res://assets/images/background-hills.png" id="7_a85f1"]
 [ext_resource type="Texture2D" uid="uid://bmjeufy5q2ldq" path="res://assets/images/background-trees.png" id="8_shmss"]
+[ext_resource type="Script" path="res://player/shaky_camera.gd" id="9_0pky0"]
 [ext_resource type="PackedScene" uid="uid://ogy6gp25hym5" path="res://enemy/boar.tscn" id="9_01koq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_278qy"]
@@ -181,11 +182,13 @@ position = Vector2(580, 94)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -15)
+process_callback = 0
 limit_smoothed = true
 position_smoothing_enabled = true
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 editor_draw_drag_margin = true
+script = ExtResource("9_0pky0")
 
 [node name="Decorations" type="Node2D" parent="."]
 metadata/_edit_lock_ = true

@@ -5,8 +5,8 @@ enum Bus { MASTER, SFX, BGM }
 @onready var sfx: Node = $SFX
 @onready var bgm_player: AudioStreamPlayer = $BGMPlayer
 
-func play_sfx(name: String) -> void:
-    var player: AudioStreamPlayer = self.sfx.get_node(name)
+func play_sfx(sfx_name: String) -> void:
+    var player: AudioStreamPlayer = self.sfx.get_node(sfx_name)
     if not player:
         return
     player.play()

@@ -285,6 +285,7 @@ func transition_state(from: State, to: State) -> void:
         State.HURT:
             self.animation_player.play("hurt")
             Input.start_joy_vibration(0, 0, 0.8, 0.8)
+            Game.shake_camera(4.0)
             self.stats.health -= self.pending_damage.amount
             var dir: Vector2 = self.pending_damage.source.global_position.direction_to(self.global_position)
             self.velocity = dir * KNOCKBACK_AMOUNT
@@ -310,3 +311,9 @@ func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
     self.pending_damage = Damage.new()
     self.pending_damage.amount = 1
     self.pending_damage.source = hitbox.owner
+
+func _on_hitbox_hit(_hurtbox: Variant) -> void:
+    Game.shake_camera(2.0)
+    Engine.time_scale = 0.01
+    await self.get_tree().create_timer(0.1, true, false, true).timeout
+    Engine.time_scale = 1.0
