@@ -9,13 +9,24 @@ I make these games partly for practice and partly for testing the functions.
 - [X] Greedy Snake
 - [X] Dodge the Creeps
 - [ ] Wind Stride
-- [ ] Adventure
+- [X] Adventure
 
 ## Sources of game assets
 
-- Images
+- 2D Images
   - OpenGameArt: https://opengameart.org
-  - Itch.io: https://itch.io
-  - Kenney.nl: https://kenney.nl/assets
   - GameArt2D: https://www.gameart2d.com/freebies.html
-  - SpriteLand: http://www.spriteland.com/
+  - Kenney.nl: https://kenney.nl/assets
+  - Itch.io: https://itch.io
+  - SVG: https://publicdomainvectors.org
+- 3D
+  - Characters
+    - https://www.mixamo.com/#/
+    - https://sketchfab.com
+    - https://www.cgtrader.com
+    - https://www.turbosquid.com
+    - https://free3d.com
+  - Scenes
+    - https://polyhaven.com
+    - https://www.blenderkit.com
+    - https://www.blendswap.com
