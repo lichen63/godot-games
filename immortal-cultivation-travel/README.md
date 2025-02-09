@@ -33,3 +33,9 @@
 ### 装备系统
 
 ### 成就系统
+
+## 资源来源
+
+- [https://anokolisa.itch.io/sidescroller-pixelart-sprites-asset-pack-forest-16x16](https://anokolisa.itch.io/sidescroller-pixelart-sprites-asset-pack-forest-16x16)
+- [https://kenney.nl/assets/animal-pack](https://kenney.nl/assets/animal-pack)
+- [https://kenney.nl/assets/cartography-pack](https://kenney.nl/assets/cartography-pack)
