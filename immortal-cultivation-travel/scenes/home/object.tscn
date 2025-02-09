@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cubafoqwnldyh"]
+
+[ext_resource type="Texture2D" uid="uid://dhd52gmrxokg1" path="res://assets/images/object_default.png" id="1_tigrh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lthbq"]
+size = Vector2(128, 113)
+
+[node name="Object" type="Area2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_tigrh")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_lthbq")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -157.5
+offset_top = -120.0
+offset_right = 157.5
+offset_bottom = -51.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Object Name"
+horizontal_alignment = 1
+vertical_alignment = 1

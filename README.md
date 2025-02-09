@@ -10,6 +10,7 @@ I make these games partly for practice and partly for testing the functions.
 - [X] Dodge the Creeps
 - [ ] Wind Stride
 - [X] Adventure
+- [ ] Immortal Cultivation Travel
 
 ## Sources of game assets
 
