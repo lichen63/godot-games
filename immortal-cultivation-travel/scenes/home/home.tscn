@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://u40uiqegw0e4"]
+[gd_scene load_steps=5 format=3 uid="uid://u40uiqegw0e4"]
 
 [ext_resource type="Texture2D" uid="uid://bev5anjf5hiog" path="res://assets/images/home_background.png" id="1_315wg"]
-[ext_resource type="PackedScene" uid="uid://cubafoqwnldyh" path="res://scenes/home/interact_object.tscn" id="2_ccpk0"]
+[ext_resource type="PackedScene" uid="uid://cubafoqwnldyh" path="res://scenes/home/interact_attributes.tscn" id="2_ccpk0"]
+[ext_resource type="PackedScene" uid="uid://c7pjg2v0kiemr" path="res://scenes/home/interact_myterious.tscn" id="3_axoqn"]
 [ext_resource type="PackedScene" uid="uid://oc1t0ahxwhkg" path="res://scenes/player/player.tscn" id="3_b1e4c"]
 
 [node name="Home" type="Node2D"]
@@ -11,8 +12,16 @@ position = Vector2(1300, 800)
 scale = Vector2(2.53906, 1.5625)
 texture = ExtResource("1_315wg")
 
-[node name="Attributes" parent="." instance=ExtResource("2_ccpk0")]
+[node name="InteractObjects" type="Node" parent="."]
+
+[node name="Attributes" parent="InteractObjects" instance=ExtResource("2_ccpk0")]
 position = Vector2(351, 303)
+object_name_str = "属性"
+
+[node name="Mysterious" parent="InteractObjects" instance=ExtResource("3_axoqn")]
+position = Vector2(345, 1401)
+object_name_str = "秘境"
 
 [node name="Player" parent="." instance=ExtResource("3_b1e4c")]
+z_index = 1
 position = Vector2(953, 767)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cubafoqwnldyh"]
 
-[ext_resource type="Script" path="res://scenes/home/interact_object.gd" id="1_bcq4g"]
+[ext_resource type="Script" path="res://scenes/home/interact_attributes.gd" id="1_bcq4g"]
 [ext_resource type="Texture2D" uid="uid://dhd52gmrxokg1" path="res://assets/images/object_default.png" id="1_tigrh"]
 [ext_resource type="Texture2D" uid="uid://dhll7p25vuiee" path="res://assets/images/interact.png" id="3_oqvuw"]
 
@@ -57,7 +57,7 @@ texture = ExtResource("1_tigrh")
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_lthbq")
 
-[node name="Label" type="Label" parent="."]
+[node name="ObjectName" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -68,7 +68,7 @@ offset_bottom = 119.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
-text = "Object Name"
+text = "Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
