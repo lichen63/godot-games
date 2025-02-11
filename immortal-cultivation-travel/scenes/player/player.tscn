@@ -1,6 +1,7 @@
-[gd_scene load_steps=35 format=3 uid="uid://oc1t0ahxwhkg"]
+[gd_scene load_steps=36 format=3 uid="uid://oc1t0ahxwhkg"]
 
 [ext_resource type="Texture2D" uid="uid://gliqp6wu328e" path="res://assets/images/player_idle.png" id="1_5yuec"]
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_e2feq"]
 [ext_resource type="Texture2D" uid="uid://buhvuk6jsvxb8" path="res://assets/images/player_attack.png" id="1_ihlfl"]
 [ext_resource type="Texture2D" uid="uid://bowrblteweku0" path="res://assets/images/player_dead.png" id="2_owdo5"]
 [ext_resource type="Texture2D" uid="uid://hyi7fari8nv" path="res://assets/images/player_run.png" id="2_xssbm"]
@@ -228,8 +229,9 @@ animations = [{
 size = Vector2(145, 172)
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_e2feq")
 
-[node name="Animation" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_uukev")
 animation = &"idle"
