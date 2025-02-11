@@ -15,4 +15,4 @@ texture = ExtResource("1_315wg")
 position = Vector2(351, 303)
 
 [node name="Player" parent="." instance=ExtResource("3_b1e4c")]
-position = Vector2(876, 1049)
+position = Vector2(953, 767)

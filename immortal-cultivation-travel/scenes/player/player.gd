@@ -21,7 +21,7 @@ func _ready() -> void:
     self.animated_sprite.play()
 
 func _unhandled_input(event: InputEvent) -> void:
-    if event.is_action_pressed(INPUT_ACTION_ACCEPT) :
+    if event.is_action_pressed(INPUT_ACTION_ACCEPT) and not self.interacting_with.is_empty():
         self.interacting_with.back().interact()
 
 func _physics_process(_delta: float) -> void:
@@ -47,3 +47,9 @@ func _physics_process(_delta: float) -> void:
         self.animated_sprite.animation = ANIMATION_IDLE
 
     self.move_and_slide()
+
+func register_interact_object(obj: InteractObject) -> void:
+    self.interacting_with.append(obj)
+
+func unregister_interact_object(obj: InteractObject) -> void:
+    self.interacting_with.erase(obj)

@@ -76,7 +76,7 @@ vertical_alignment = 1
 position = Vector2(0, -90)
 texture = ExtResource("3_oqvuw")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="InteractAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_hhkbl")
 }
