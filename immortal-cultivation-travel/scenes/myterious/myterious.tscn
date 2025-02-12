@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjt7l71iwd4oy"]
+
+[ext_resource type="Texture2D" uid="uid://b1ilxc0cqvkfn" path="res://assets/images/myterious_background.png" id="1_nghuf"]
+
+[node name="Myterious" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(3513, 2071)
+scale = Vector2(4, 4)
+texture = ExtResource("1_nghuf")
