@@ -19,8 +19,6 @@ func _ready() -> void:
         self.object_sprite.texture = load(self.object_res_str)
     self.interact_image.hide()
     self.interact_animation_player.stop()
-    self.body_entered.connect(_on_body_entered)
-    self.body_exited.connect(_on_body_exited)
 
 func _on_body_entered(body: Node2D) -> void:
     if not body is Player:

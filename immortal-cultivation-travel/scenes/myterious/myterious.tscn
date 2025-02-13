@@ -17,5 +17,12 @@ mesh = SubResource("QuadMesh_t3gmm")
 z_index = 1
 position = Vector2(934, 916)
 
-[node name="Monster" parent="." instance=ExtResource("1_fiyqf")]
+[node name="Monsters" type="Node" parent="."]
+
+[node name="Monster_1" parent="Monsters" instance=ExtResource("1_fiyqf")]
 position = Vector2(454, 549)
+monster_res_str = "res://assets/images/monster_1.png"
+
+[node name="Monster_2" parent="Monsters" instance=ExtResource("1_fiyqf")]
+position = Vector2(468, 1280)
+monster_res_str = "res://assets/images/monster_2.png"
