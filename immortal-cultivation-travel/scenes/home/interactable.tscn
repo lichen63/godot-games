@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cubafoqwnldyh"]
 
-[ext_resource type="Script" path="res://scenes/home/interact_attributes.gd" id="1_bcq4g"]
-[ext_resource type="Texture2D" uid="uid://dhd52gmrxokg1" path="res://assets/images/object_default.png" id="1_tigrh"]
+[ext_resource type="Script" path="res://scenes/home/interactable.gd" id="1_aopg0"]
+[ext_resource type="Texture2D" uid="uid://dhd52gmrxokg1" path="res://assets/images/interactable_1.png" id="1_tigrh"]
 [ext_resource type="Texture2D" uid="uid://dhll7p25vuiee" path="res://assets/images/interact.png" id="3_oqvuw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lthbq"]
@@ -46,8 +46,8 @@ _data = {
 "interactable": SubResource("Animation_6c8db")
 }
 
-[node name="InteractObject" type="Area2D"]
-script = ExtResource("1_bcq4g")
+[node name="Interactable" type="Area2D"]
+script = ExtResource("1_aopg0")
 
 [node name="ObjectSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.4, 0.4)

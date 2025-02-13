@@ -12,7 +12,7 @@ const INPUT_ACTION_UP: String = "player_up"
 const INPUT_ACTION_DOWN: String = "player_down"
 const INPUT_ACTION_ACCEPT: String = "player_accept"
 
-var interacting_with: Array[InteractObject] = []
+var interacting_with: Array[Interactable] = []
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
 
@@ -48,8 +48,8 @@ func _physics_process(_delta: float) -> void:
 
     self.move_and_slide()
 
-func register_interact_object(obj: InteractObject) -> void:
+func register_interact_object(obj: Interactable) -> void:
     self.interacting_with.append(obj)
 
-func unregister_interact_object(obj: InteractObject) -> void:
+func unregister_interact_object(obj: Interactable) -> void:
     self.interacting_with.erase(obj)

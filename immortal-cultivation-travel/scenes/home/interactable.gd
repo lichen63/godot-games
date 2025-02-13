@@ -1,16 +1,20 @@
-class_name InteractObject
+class_name Interactable
 extends Area2D
 
 const INTERACT_ANIMATION: String = "interactable"
 
 @export var object_name_str: String = "Interactable"
+@export_file("*.png") var object_res_str: String = ""
 
 @onready var object_name: Label = $ObjectName
+@onready var object_sprite: Sprite2D = $ObjectSprite
 @onready var interact_image: Sprite2D = $InteractSprite
 @onready var interact_animation_player: AnimationPlayer = $InteractAnimationPlayer
 
 func _ready() -> void:
     self.object_name.text = object_name_str
+    if not object_res_str.is_empty():
+        self.object_sprite.texture = load(self.object_res_str)
     self.interact_image.hide()
     self.interact_animation_player.stop()
     self.body_entered.connect(_on_body_entered)
