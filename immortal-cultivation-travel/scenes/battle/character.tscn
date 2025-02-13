@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://dx5q7ykgokc1o"]
+
+[ext_resource type="Texture2D" uid="uid://chfq31xunni2q" path="res://assets/images/player.png" id="1_ugyfe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wl8bo"]
+bg_color = Color(0.90732, 0.0210523, 0.194444, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rs3k1"]
+bg_color = Color(0.0210523, 0.15981, 0.90732, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6u02q"]
+bg_color = Color(0.917503, 0.897746, 0.0605094, 1)
+
+[node name="Character" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("1_ugyfe")
+
+[node name="Points" type="VBoxContainer" parent="."]
+offset_left = -55.0
+offset_top = -115.0
+offset_right = 57.0
+offset_bottom = -81.0
+theme_override_constants/separation = 2
+
+[node name="Health" type="ProgressBar" parent="Points"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_wl8bo")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Maga" type="ProgressBar" parent="Points"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_rs3k1")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="Vitality" type="ProgressBar" parent="Points"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_6u02q")
+step = 1.0
+value = 50.0
+show_percentage = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
