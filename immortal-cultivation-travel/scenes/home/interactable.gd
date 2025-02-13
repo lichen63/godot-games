@@ -2,6 +2,8 @@ class_name Interactable
 extends Area2D
 
 const INTERACT_ANIMATION: String = "interactable"
+const NAME_ATTRIBUTES: String = "Attributes"
+const NAME_MYTERIOUS: String = "Myterious"
 
 @export var object_name_str: String = "Interactable"
 @export_file("*.png") var object_res_str: String = ""
@@ -36,3 +38,10 @@ func _on_body_exited(body: Node2D) -> void:
 
 func interact() -> void:
     print("[Interact] %s" % self.name)
+    match name:
+        NAME_ATTRIBUTES:
+            pass
+        NAME_MYTERIOUS:
+            self.get_tree().change_scene_to_file("res://scenes/myterious/myterious.tscn")
+        _:
+            pass
