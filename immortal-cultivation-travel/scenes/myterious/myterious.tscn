@@ -1,10 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjt7l71iwd4oy"]
+[gd_scene load_steps=4 format=3 uid="uid://bjt7l71iwd4oy"]
 
-[ext_resource type="Texture2D" uid="uid://b1ilxc0cqvkfn" path="res://assets/images/myterious_background.png" id="1_nghuf"]
+[ext_resource type="PackedScene" uid="uid://bqxdt54gviunl" path="res://scenes/myterious/monster.tscn" id="1_fiyqf"]
+[ext_resource type="PackedScene" uid="uid://oc1t0ahxwhkg" path="res://scenes/player/player.tscn" id="1_u8x2h"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_t3gmm"]
 
 [node name="Myterious" type="Node2D"]
 
-[node name="Background" type="Sprite2D" parent="."]
-position = Vector2(3513, 2071)
-scale = Vector2(4, 4)
-texture = ExtResource("1_nghuf")
+[node name="Background" type="MeshInstance2D" parent="."]
+modulate = Color(0.313312, 0.29574, 0.29574, 1)
+position = Vector2(2925.25, 1126.5)
+scale = Vector2(11043.5, 6363)
+mesh = SubResource("QuadMesh_t3gmm")
+
+[node name="Player" parent="." instance=ExtResource("1_u8x2h")]
+z_index = 1
+position = Vector2(934, 916)
+
+[node name="Monster" parent="." instance=ExtResource("1_fiyqf")]
+position = Vector2(454, 549)

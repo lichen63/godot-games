@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://bqxdt54gviunl"]
-
-[node name="MonsterObject" type="CharacterBody2D"]
-
-[node name="Sprite" type="Sprite2D" parent="."]
