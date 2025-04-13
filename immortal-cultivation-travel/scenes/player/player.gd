@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-const SPEED: float = 500.0
+const MOVE_SPEED: float = 500.0
 const ANIMATION_IDLE: String = "idle"
 const ANIMATION_RUN: String = "run"
 const ANIMATION_ATTACK: String = "attack"
@@ -12,6 +12,7 @@ const INPUT_ACTION_UP: String = "player_up"
 const INPUT_ACTION_DOWN: String = "player_down"
 const INPUT_ACTION_ACCEPT: String = "player_accept"
 
+var gravity: float = ProjectSettings.get("physics/2d/default_gravity") as float
 var interacting_with: Array[Interactable] = []
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite
@@ -24,28 +25,15 @@ func _unhandled_input(event: InputEvent) -> void:
   if event.is_action_pressed(INPUT_ACTION_ACCEPT) and not self.interacting_with.is_empty():
     self.interacting_with.back().interact()
 
-func _physics_process(_delta: float) -> void:
-  var direction = Vector2.ZERO
-
-  if Input.is_action_pressed(INPUT_ACTION_LEFT):
-    direction.x -= 1
-  if Input.is_action_pressed(INPUT_ACTION_RIGHT):
-    direction.x += 1
-  if Input.is_action_pressed(INPUT_ACTION_UP):
-    direction.y -= 1
-  if Input.is_action_pressed(INPUT_ACTION_DOWN):
-    direction.y += 1
-
-  direction = direction.normalized()
-  self.velocity = direction * SPEED
-
-  if direction != Vector2.ZERO:
+func _physics_process(delta: float) -> void:
+  self.velocity.y += gravity * delta
+  var direction: float = Input.get_axis(INPUT_ACTION_LEFT, INPUT_ACTION_RIGHT)
+  self.velocity.x = direction * MOVE_SPEED
+  if not is_zero_approx(direction):
     self.animated_sprite.animation = ANIMATION_RUN
-    if not is_zero_approx(direction.x):
-      self.animated_sprite.flip_h = direction.x < 0
+    self.animated_sprite.flip_h = is_equal_approx(direction, -1)
   else:
     self.animated_sprite.animation = ANIMATION_IDLE
-
   self.move_and_slide()
 
 func register_interact_object(obj: Interactable) -> void:

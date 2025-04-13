@@ -53,6 +53,10 @@ player_accept={
 ]
 }
 
+[physics]
+
+2d/default_gravity=1000.0
+
 [rendering]
 
 renderer/rendering_method="mobile"
