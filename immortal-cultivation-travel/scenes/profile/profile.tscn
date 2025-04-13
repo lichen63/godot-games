@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://buoc0no1gvy00"]
+
+[ext_resource type="Theme" uid="uid://cy12ltf2s1ia3" path="res://scenes/theme/common.tres" id="1_x4tjc"]
+
+[node name="Profile" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.27258, 0.27258, 0.27258, 1)
+
+[node name="SkillContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Title" type="Label" parent="SkillContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "技能"
+horizontal_alignment = 1
+
+[node name="Skill1" type="HBoxContainer" parent="SkillContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SkillContainer/Skill1"]
+layout_mode = 2
+text = "技能1"
+
+[node name="SkillName" type="Label" parent="SkillContainer/Skill1"]
+layout_mode = 2
+text = "普通攻击"
+
+[node name="Skill2" type="HBoxContainer" parent="SkillContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SkillContainer/Skill2"]
+layout_mode = 2
+text = "技能1"
+
+[node name="SkillName" type="Label" parent="SkillContainer/Skill2"]
+layout_mode = 2
+text = "普通攻击"
