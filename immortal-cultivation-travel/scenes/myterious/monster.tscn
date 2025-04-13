@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bqxdt54gviunl"]
 
 [ext_resource type="Texture2D" uid="uid://wvj78v5iwlss" path="res://assets/images/monster_1.png" id="1_askci"]
-[ext_resource type="Script" path="res://scenes/myterious/monster.gd" id="1_htnxa"]
+[ext_resource type="Script" uid="uid://bjd88ae8j7q53" path="res://scenes/myterious/monster.gd" id="1_htnxa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2mo3o"]
 size = Vector2(199, 141)
