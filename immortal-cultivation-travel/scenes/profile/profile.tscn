@@ -30,7 +30,7 @@ layout_mode = 2
 [node name="Title" type="Label" parent="HBoxContainer/SkillContainer"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
-text = "技能"
+text = "SKILL_TITLE"
 horizontal_alignment = 1
 
 [node name="Skill1" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
@@ -38,59 +38,81 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill1"]
 layout_mode = 2
-text = "技能1"
+text = "SKILL_PREFIX: "
 
 [node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill1"]
 layout_mode = 2
-text = "普通攻击"
+text = "NORMAL_ATTACK"
 
 [node name="Skill2" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill2"]
 layout_mode = 2
-text = "技能1"
+text = "SKILL_PREFIX: "
 
 [node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill2"]
 layout_mode = 2
-text = "普通攻击"
+text = "NORMAL_ATTACK"
 
 [node name="Skill3" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill3"]
 layout_mode = 2
-text = "技能1"
+text = "SKILL_PREFIX: "
 
 [node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill3"]
 layout_mode = 2
-text = "普通攻击"
+text = "NORMAL_ATTACK"
 
 [node name="Skill4" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill4"]
 layout_mode = 2
-text = "技能1"
+text = "SKILL_PREFIX: "
 
 [node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill4"]
 layout_mode = 2
-text = "普通攻击"
+text = "NORMAL_ATTACK"
 
 [node name="EquipContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
 [node name="Title" type="Label" parent="HBoxContainer/EquipContainer"]
 layout_mode = 2
-text = "装备"
+text = "EQUIP_TITLE"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/EquipContainer"]
+[node name="Armor" type="HBoxContainer" parent="HBoxContainer/EquipContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/EquipContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/EquipContainer/Armor"]
 layout_mode = 2
-text = "头盔："
+text = "ARMOR: "
 
-[node name="Label2" type="Label" parent="HBoxContainer/EquipContainer/HBoxContainer"]
+[node name="Name" type="Label" parent="HBoxContainer/EquipContainer/Armor"]
 layout_mode = 2
-text = "普通头盔"
+text = "NORMAL_ARMOR"
+
+[node name="Weapon" type="HBoxContainer" parent="HBoxContainer/EquipContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/EquipContainer/Weapon"]
+layout_mode = 2
+text = "WEAPON: "
+
+[node name="Name" type="Label" parent="HBoxContainer/EquipContainer/Weapon"]
+layout_mode = 2
+text = "NORMAL_WEAPON"
+
+[node name="MagicalArtifact" type="HBoxContainer" parent="HBoxContainer/EquipContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/EquipContainer/MagicalArtifact"]
+layout_mode = 2
+text = "MAGICAL_ARTIFACT: "
+
+[node name="Name" type="Label" parent="HBoxContainer/EquipContainer/MagicalArtifact"]
+layout_mode = 2
+text = "EMPTY"
