@@ -57,6 +57,10 @@ player_jump={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://assets/languages/language.en.translation", "res://assets/languages/language.zh.translation")
+
 [physics]
 
 2d/default_gravity=1000.0

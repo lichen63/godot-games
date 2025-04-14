@@ -31,7 +31,7 @@ offset_right = 120.0
 offset_bottom = 285.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 120
-text = "修仙之旅"
+text = "GAME_NAME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -49,6 +49,6 @@ offset_bottom = -252.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_font_sizes/font_size = 100
-text = "新游戏"
+text = "NEW_GAME"
 
 [connection signal="pressed" from="NewGame" to="." method="_on_start_pressed"]
