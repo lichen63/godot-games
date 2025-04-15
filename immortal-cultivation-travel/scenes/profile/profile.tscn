@@ -19,100 +19,124 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.27258, 0.27258, 0.27258, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="SkillContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="SkillContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="HBoxContainer/SkillContainer"]
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
 text = "SKILL_TITLE"
 horizontal_alignment = 1
 
-[node name="Skill1" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
+[node name="Skill1" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill1"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill1"]
 layout_mode = 2
+theme = ExtResource("1_x4tjc")
 text = "SKILL_PREFIX: "
 
-[node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill1"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill1"]
 layout_mode = 2
-text = "NORMAL_ATTACK"
+theme = ExtResource("1_x4tjc")
+text = "SKILL_NORMAL_ATTACK"
 
-[node name="Skill2" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
+[node name="Skill2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill2"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill2"]
 layout_mode = 2
+theme = ExtResource("1_x4tjc")
 text = "SKILL_PREFIX: "
 
-[node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill2"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill2"]
 layout_mode = 2
-text = "NORMAL_ATTACK"
+theme = ExtResource("1_x4tjc")
+text = "SKILL_NORMAL_ATTACK"
 
-[node name="Skill3" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
+[node name="Skill3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill3"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill3"]
 layout_mode = 2
+theme = ExtResource("1_x4tjc")
 text = "SKILL_PREFIX: "
 
-[node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill3"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill3"]
 layout_mode = 2
-text = "NORMAL_ATTACK"
+theme = ExtResource("1_x4tjc")
+text = "SKILL_NORMAL_ATTACK"
 
-[node name="Skill4" type="HBoxContainer" parent="HBoxContainer/SkillContainer"]
+[node name="Skill4" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/SkillContainer/Skill4"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill4"]
 layout_mode = 2
+theme = ExtResource("1_x4tjc")
 text = "SKILL_PREFIX: "
 
-[node name="Name" type="Label" parent="HBoxContainer/SkillContainer/Skill4"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill4"]
 layout_mode = 2
-text = "NORMAL_ATTACK"
+theme = ExtResource("1_x4tjc")
+text = "SKILL_NORMAL_ATTACK"
 
-[node name="EquipContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="EquipContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="HBoxContainer/EquipContainer"]
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer/EquipContainer"]
 layout_mode = 2
+theme = ExtResource("1_x4tjc")
 text = "EQUIP_TITLE"
+horizontal_alignment = 1
 
-[node name="Armor" type="HBoxContainer" parent="HBoxContainer/EquipContainer"]
+[node name="Armor" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/EquipContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/EquipContainer/Armor"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/EquipContainer/Armor"]
 layout_mode = 2
-text = "ARMOR: "
+theme = ExtResource("1_x4tjc")
+text = "EQUIP_ARMOR: "
 
-[node name="Name" type="Label" parent="HBoxContainer/EquipContainer/Armor"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/EquipContainer/Armor"]
 layout_mode = 2
-text = "NORMAL_ARMOR"
+theme = ExtResource("1_x4tjc")
+text = "EQUIP_NORMAL_ARMOR"
 
-[node name="Weapon" type="HBoxContainer" parent="HBoxContainer/EquipContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HBoxContainer/EquipContainer/Weapon"]
-layout_mode = 2
-text = "WEAPON: "
-
-[node name="Name" type="Label" parent="HBoxContainer/EquipContainer/Weapon"]
-layout_mode = 2
-text = "NORMAL_WEAPON"
-
-[node name="MagicalArtifact" type="HBoxContainer" parent="HBoxContainer/EquipContainer"]
+[node name="Weapon" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/EquipContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="HBoxContainer/EquipContainer/MagicalArtifact"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/EquipContainer/Weapon"]
 layout_mode = 2
-text = "MAGICAL_ARTIFACT: "
+theme = ExtResource("1_x4tjc")
+text = "EQUIP_WEAPON: "
 
-[node name="Name" type="Label" parent="HBoxContainer/EquipContainer/MagicalArtifact"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/EquipContainer/Weapon"]
 layout_mode = 2
-text = "EMPTY"
+theme = ExtResource("1_x4tjc")
+text = "EQUIP_NORMAL_SWORD"
+
+[node name="MagicalArtifact" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/EquipContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/EquipContainer/MagicalArtifact"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "EQUIP_MAGICAL_ARTIFACT: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/EquipContainer/MagicalArtifact"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "EQUIP_EMPTY"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
