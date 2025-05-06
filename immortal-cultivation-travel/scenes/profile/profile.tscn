@@ -163,6 +163,3 @@ text = "EQUIP_TROUSERS: "
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
 text = "EQUIP_EMPTY"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
