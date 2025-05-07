@@ -20,13 +20,16 @@ grow_vertical = 2
 color = Color(0.27258, 0.27258, 0.27258, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 200
 alignment = 1
 
 [node name="SkillContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
@@ -38,54 +41,54 @@ theme = ExtResource("1_x4tjc")
 text = "SKILL_TITLE"
 horizontal_alignment = 1
 
-[node name="Skill1" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
+[node name="Skill_1" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill1"]
-layout_mode = 2
-theme = ExtResource("1_x4tjc")
-text = "SKILL_PREFIX: "
-
-[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill1"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_1"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
-text = "SKILL_NORMAL_ATTACK"
+text = "SKILL_PREFIX 1: "
 
-[node name="Skill2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill2"]
-layout_mode = 2
-theme = ExtResource("1_x4tjc")
-text = "SKILL_PREFIX: "
-
-[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill2"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_1"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
 text = "SKILL_NORMAL_ATTACK"
 
-[node name="Skill3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
+[node name="Skill_2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill3"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_2"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
-text = "SKILL_PREFIX: "
+text = "SKILL_PREFIX 2: "
 
-[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill3"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_2"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
 text = "SKILL_NORMAL_ATTACK"
 
-[node name="Skill4" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
+[node name="Skill_3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill4"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_3"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
-text = "SKILL_PREFIX: "
+text = "SKILL_PREFIX 3: "
 
-[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill4"]
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_3"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "SKILL_NORMAL_ATTACK"
+
+[node name="Skill_4" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/SkillContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_4"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "SKILL_PREFIX 4: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer/SkillContainer/Skill_4"]
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
 text = "SKILL_NORMAL_ATTACK"
@@ -163,3 +166,203 @@ text = "EQUIP_TROUSERS: "
 layout_mode = 2
 theme = ExtResource("1_x4tjc")
 text = "EQUIP_EMPTY"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="FriendsContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_TITLE"
+horizontal_alignment = 1
+
+[node name="Friend_1" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/FriendsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_1"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_PREFIX 1: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_1"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_EMPTY"
+
+[node name="Friend_2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/FriendsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_2"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_PREFIX 1: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_2"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_EMPTY"
+
+[node name="Friend_3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/FriendsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_3"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_PREFIX 1: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_3"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_EMPTY"
+
+[node name="Friend_4" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/FriendsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_4"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_PREFIX 1: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/FriendsContainer/Friend_4"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "FRIEND_EMPTY"
+
+[node name="PetsContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_TITLE"
+horizontal_alignment = 1
+
+[node name="Pet_1" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/PetsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_1"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_PREFIX 1: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_1"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_EMTPY"
+
+[node name="Pet_2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/PetsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_2"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_PREFIX 2: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_2"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_EMTPY"
+
+[node name="Pet_3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/PetsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_3"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_PREFIX 2: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_3"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_EMTPY"
+
+[node name="Pet_4" type="HBoxContainer" parent="VBoxContainer/HBoxContainer2/PetsContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_4"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_PREFIX 2: "
+
+[node name="Name" type="Label" parent="VBoxContainer/HBoxContainer2/PetsContainer/Pet_4"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "PET_EMTPY"
+
+[node name="AttributesContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBoxContainer/AttributesContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "ATTRIBUTE_TITLE"
+horizontal_alignment = 1
+
+[node name="GridContainer" type="GridContainer" parent="VBoxContainer/AttributesContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="StrengthLabel" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "STR_STRENGTH"
+
+[node name="StrengthValue" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "0"
+
+[node name="DexterityLabel" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "STR_DEXTERITY"
+
+[node name="DexterityValue" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "0"
+
+[node name="ConstitutionLabel" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "STR_CONSTITUTION"
+
+[node name="ConstitutionValue" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "0"
+
+[node name="IntelligenceLabel" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "STR_INTELLIGENCE"
+
+[node name="IntelligenceValue" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "0"
+
+[node name="WisdomLabel" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "STR_WISDOM"
+
+[node name="WisdomValue" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "0"
+
+[node name="CharismaLabel" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "STR_CHARISMA"
+
+[node name="CharismaValue" type="Label" parent="VBoxContainer/AttributesContainer/GridContainer"]
+layout_mode = 2
+theme = ExtResource("1_x4tjc")
+text = "0"
